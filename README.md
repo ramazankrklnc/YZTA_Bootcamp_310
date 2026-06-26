@@ -1,4 +1,4 @@
-# HakkımVar — Neden Bu Projeyi Yapmalıyız?
+# HakkımVar 
 
 ## Önce bir düşünce deneyi
 
@@ -35,9 +35,7 @@ Kiracı, telefonu ya da bilgisayarından kira sözleşmesinin fotoğrafını yü
 
 Bootcamp'in puanlama sistemine bakınca bu projenin neden öne çıktığı netleşiyor.
 
-### En ağır kriter: AI model seçimi ve kullanımı (20 puan)
-
-Bu projede 4 farklı modeli 4 farklı sebepten kullanıyoruz:
+### En ağır kriter: AI model seçimi ve kullanımı 
 
 1. Sözleşme fotoğrafını okumak için görsel anlama kapasitesi yüksek bir model lazım
 2. Hukuki muhakeme için kesin ve alıntılı analiz yapan, "belki" demeye alışık bir model lazım
@@ -46,7 +44,7 @@ Bu projede 4 farklı modeli 4 farklı sebepten kullanıyoruz:
 
 Her modelin seçiminin gerekçesi var. Bu, jüriye *"biz sadece API çağırdık"* değil *"biz neden hangi araç için hangi modelin en iyi olduğunu düşündük"* mesajını veriyor. Diğer ekiplerin büyük çoğunluğu bir modeli her şey için kullanacak.
 
-### İkinci ağır kriter: AI agent hafızası ve orkestrasyonu (15 puan)
+### İkinci ağır kriter: AI agent hafızası ve orkestrasyonu
 
 Bu projede agent mimarisi doğal olarak gerekli — sonradan eklenmiş değil. Şöyle açıklayayım:
 
@@ -59,7 +57,7 @@ Hafıza ise kiracının tüm süreci boyunca geçmişini saklıyor — 6 ay sonr
 
 **Bu bir chat botu değil. Bu bir iş akışı.** Jüri bu farkı görecek.
 
-### Özgünlük (10 puan)
+### Özgünlük
 
 Türkiye'de bunu yapan kimse yok. DoNotPay benzeri ürünler Türkiye'de hiç olmadı. Türkçe hukuki yardım araçları statik makale siteleri düzeyinde. Dünya genelinde benzer ürünler var ama Türk hukuku çok spesifik (Türk Borçlar Kanunu, değişen TÜFE hesaplama yöntemi, noter ihtarnamesi prosedürü) — bunlar direkt çeviri ile çözülmüyor.
 
@@ -79,19 +77,19 @@ Jürideki herkesin ya kendi kira sözleşmesi var ya da yakınının. Biri o an 
 
 Projeyi ikişer haftalık üç sprint'e bölüyoruz:
 
-### Sprint 1 (Hafta 1–2)
+### Sprint 1 
 
 - Sözleşme analiz motoru çalışıyor.
 - Fotoğraf yükle, yasadışı madde bul akışı tamamlandı.
 - Türk Borçlar Kanunu'nun ilgili maddeleri bilgi tabanına eklendi.
 
-### Sprint 2 (Hafta 3–4)
+### Sprint 2 
 
 - Haklar danışmanı ve ihtarname üreteci tamamlandı.
 - Kullanıcı hafızası sistemi kuruldu — kiracının sözleşme detaylarını her seferinde tekrar girmesine gerek yok.
 - LangGraph orkestrasyon çalışıyor.
 
-### Sprint 3 (Hafta 5–6)
+### Sprint 3 
 
 - Ürün canlıya alındı.
 - 10 gerçek kiracıyla test edildi (herkese *"kira sözleşmen var mı?"* diye sormak yeterli).
