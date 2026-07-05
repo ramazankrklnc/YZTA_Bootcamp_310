@@ -68,7 +68,7 @@ HakkımVar, Türkiye'de kirada oturan 40 milyonun üzerindeki kiracının kira s
 
 - **Ürün Durumu**: Ekran görüntüsü (giriş ekranı arayüz taslağı):
 
-  [![Ürün Ekran Görüntüsü](./ProjectManagement/Sprint1Documents/productss1.png)](./ProjectManagement/Sprint1Documents/productss1.png)
+  [![Ürün Ekran Görüntüsü](productss1.png)
 
 - **Sprint Review**:
 Sprint 1 kapsamında sözleşme analiz motorunun temel altyapısı (PDF işleme, chunking, embedding, vektör veritabanı) başarıyla kurulmuştur. Türk Borçlar Kanunu ve Kira Hukuku mevzuatı bilgi tabanına eklenmiştir. Arayüz tasarımının ilk taslakları hazırlanmış, LangGraph ile çoklu ajan orkestrasyonu planlaması netleştirilmiştir. Sprint Review katılımcıları: [Katılımcı isimlerini buraya ekleyin]
