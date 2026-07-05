@@ -6,12 +6,11 @@ HakkımVar Takımı
 
 ## Takım Elemanları
 
-- [İsim Soyisim]: Product Owner
-- [İsim Soyisim]: Scrum Master
-- [İsim Soyisim]: Team Member/Developer
-- [İsim Soyisim]: Team Member/Developer
-
-> Not: Takım üyeleri bölümünü kendi ekip bilgilerinizle güncelleyin.
+- [Ramazan Karakılınç]: Product Owner
+- [Selin Zeydan]: Scrum Master
+- [Arda Kocadoru]: Team Member/Developer
+- [İzzet Mert Özyağlı]: Team Member/Developer
+- [Mehmet Emin Akkaya]: Team Member/Developer
 
 ## Ürün İsmi
 
