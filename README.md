@@ -40,7 +40,7 @@ HakkımVar, Türkiye'de kirada oturan 40 milyonun üzerindeki kiracının kira s
 
 ## Product Backlog URL
 
-[Trello / Miro Backlog Board Linkinizi Buraya Ekleyin]
+[https://miro.com/app/board/uXjVH-kKWLY=/]
 
 ---
 
