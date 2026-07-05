@@ -53,7 +53,7 @@ HakkımVar, Türkiye'de kirada oturan 40 milyonun üzerindeki kiracının kira s
 
 - **Sprint board update**: Sprint board screenshotu:
 
-![Sprint 1 Board](ProjectManagement/Sprint1Documents/sprint1_board.png)
+![Sprint 1 Board](sprint1_board.png)
 
   Sprint 1 sonunda **Done** sütununda tamamlanan işler:
   - PDF metinlerini madde bazlı bölme (chunking) algoritması
