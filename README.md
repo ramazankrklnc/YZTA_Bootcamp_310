@@ -79,7 +79,7 @@ Sprint süresince Daily Scrum toplantıları, ekip üyelerinin uygunluk durumuna
 
 ![Daily Scrum Ekran Görüntüleri](Sprint_1_daily_scrum_ss_3.jpg)
 
-![Daily Scrum Ekran Görüntüleri](Sprint_1_daily_scrum_ss_4.jpg)
+![Daily Scrum Ekran Görüntüleri](Sprint_1_daily_scrum_ss_4.png)
 
 
 - **Sprint Review**:
