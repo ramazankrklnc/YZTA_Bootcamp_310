@@ -49,7 +49,7 @@ HakkımVar, Türkiye'de kirada oturan 40 milyonun üzerindeki kiracının kira s
 
 - **Backlog düzeni ve Story seçimleri**: Backlog, sözleşme analiz motorunun ve temel altyapının (vektör veritabanı, chunking, embedding) öncelikli olarak tamamlanması hedeflenerek düzenlenmiştir. Board; **Rejected**, **Backlog**, **To Do**, **In Progress** ve **Done** olmak üzere beş sütuna ayrılmıştır. Kartlar ayrıca renk koduyla etiket türüne göre gruplanmıştır: Diğer, Görsel İşleme, Ses, Tasarım ve Kod.
 
-- **Daily Scrum**: Daily Scrum toplantıları zamansal sebeplerden ötürü Slack üzerinden yürütülmüştür.
+- **Daily Scrum**: Daily Scrum toplantıları Whatsapp ve Google Meet üzerinden yürütülmüştür.
 
 - **Sprint board update**: Sprint board screenshotu:
 
@@ -69,6 +69,12 @@ HakkımVar, Türkiye'de kirada oturan 40 milyonun üzerindeki kiracının kira s
 - **Ürün Durumu**: Ekran görüntüsü (giriş ekranı arayüz taslağı):
 
   [![Ürün Ekran Görüntüsü](productss1.png)
+
+- **Daily Scrum**:
+Sprint süresince Daily Scrum toplantıları, ekip üyelerinin uygunluk durumuna göre WhatsApp yazışmaları ve Google Meet görüşmeleri aracılığıyla gerçekleştirilmiştir. Toplantılarda günlük ilerleme, tamamlanan görevler, karşılaşılan engeller ve bir sonraki adımlar değerlendirilmiştir.
+
+![Daily Scrum Ekran Görüntüleri]()
+
 
 - **Sprint Review**:
 Sprint 1 kapsamında sözleşme analiz motorunun temel altyapısı (PDF işleme, chunking, embedding, vektör veritabanı) başarıyla kurulmuştur. Türk Borçlar Kanunu ve Kira Hukuku mevzuatı bilgi tabanına eklenmiştir. Arayüz tasarımının ilk taslakları hazırlanmış, LangGraph ile çoklu ajan orkestrasyonu planlaması netleştirilmiştir. Sprint Review katılımcıları: [Katılımcı isimlerini buraya ekleyin]
