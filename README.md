@@ -73,7 +73,13 @@ HakkımVar, Türkiye'de kirada oturan 40 milyonun üzerindeki kiracının kira s
 - **Daily Scrum**:
 Sprint süresince Daily Scrum toplantıları, ekip üyelerinin uygunluk durumuna göre WhatsApp yazışmaları ve Google Meet görüşmeleri aracılığıyla gerçekleştirilmiştir. Toplantılarda günlük ilerleme, tamamlanan görevler, karşılaşılan engeller ve bir sonraki adımlar değerlendirilmiştir.
 
-![Daily Scrum Ekran Görüntüleri]()
+![Daily Scrum Ekran Görüntüleri](Sprint_1_daily_scrum_ss.jpg)
+
+![Daily Scrum Ekran Görüntüleri](Sprint_1_daily_scrum_ss_2.jpg)
+
+![Daily Scrum Ekran Görüntüleri](Sprint_1_daily_scrum_ss_3.jpg)
+
+![Daily Scrum Ekran Görüntüleri](Sprint_1_daily_scrum_ss_4.jpg)
 
 
 - **Sprint Review**:
