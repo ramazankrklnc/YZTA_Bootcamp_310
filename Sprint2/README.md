@@ -6,7 +6,7 @@
 
 ## 📊 Sprint Board
 
-![Sprint 2 Board](sprint2_board.png)
+![Sprint 2 Board](sprint2_board.jpeg)
 
 ---
 
