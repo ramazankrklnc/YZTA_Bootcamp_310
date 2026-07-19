@@ -1,0 +1,19 @@
+# =====================
+# Python
+# =====================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+.env
+.env.*
+
+
+Sprint2/VectorDatabase/chroma_db/
+Sprint2/.env
+_temp_backup/
+*.pyc
+__pycache__/
