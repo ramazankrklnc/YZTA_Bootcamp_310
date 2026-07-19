@@ -104,7 +104,9 @@ print(f"\n✅ Total documents: {len(docs)}")
 
 vector_db = Chroma(
     persist_directory="./hukuk_db",
-    embedding_function=embeddings
+    embedding_function=embeddings,
+    collection_name="kira_hukuku_knowledge"
+
 )
 
 existing = len(vector_db.get()["ids"])
@@ -139,6 +141,7 @@ results = vector_db.similarity_search(
 print("\n🔎 RESULTS:\n")
 
 for i, r in enumerate(results, 1):
+    print(query)
     print(f"--- Result {i} ---")
     print(r.metadata)
     print(r.page_content[:400])
