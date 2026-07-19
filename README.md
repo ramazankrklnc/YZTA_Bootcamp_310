@@ -509,7 +509,7 @@ Sprint1/
 
 ### Sprint Board
 
-![Sprint 2 Board](Sprint2/sprint2_board.png)
+![Sprint 2 Board](Sprint2/sprint2_board.jpeg)
 
 ### Daily Scrum
 
