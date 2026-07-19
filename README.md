@@ -17,7 +17,7 @@
 
 Kira sözleşmesinin fotoğrafını yükle → Saniyeler içinde yasadışı maddeleri gör → İhtarnameyi indir
 
-[Sprint 1](Sprint1/) · [Sprint 2](Sprint2/) · [Yol Haritası](Road_Map1.pdf) · [Product Backlog](https://miro.com/app/board/uXjVH-kKWLY=/)
+[Sprint 1](Sprint1/) · [Sprint 2](Sprint2/) · [Yol Haritası](Road_Map1.pdf) · [Product Backlog](https://miro.com/welcomeonboard/STdzU2R2ajVtQ0lTeFVyR1lKYWtXR0xrS1poUXlJeGJpWEJKY2ZGd0U4WnZwYjl6RjU5L2ZWZlY3dW52WFg5blFhdmtORzdMclEyRTJsU0dpRFpQQmY0V0JoaUxNVEZCeEE0cjRtSlFHY2NYVFk1TFBHcmpVU2U0YnBISEcyS2dBd044SHFHaVlWYWk0d3NxeHNmeG9BPT0hdjE=?share_link_id=409621996350)
 
 </div>
 
