@@ -1,7 +1,5 @@
 # ⚖️ HakkımVar — Sprint 2 Kurulum & Çalıştırma
 
-<<<<<<< HEAD
-=======
 > **Sprint Dönemi:** 3–4. Haftalar | **Hedef:** LangGraph çoklu ajan, FastAPI backend, Streamlit UI
 
 ---
@@ -27,7 +25,6 @@ Sprint süresince Daily Scrum toplantıları **WhatsApp** yazışmaları ve **Go
 
 ---
 
->>>>>>> origin/master
 ## 🚀 Hızlı Başlangıç
 
 ### 1. .env dosyası oluştur
@@ -86,10 +83,7 @@ YZTA_Bootcamp_310/
 │   └── models.py             ← Pydantic modeller
 ├── app.py                    ← Streamlit UI
 ├── requirements.txt
-<<<<<<< HEAD
-=======
 ├── sprint2_board.png         ← Sprint board ekran görüntüsü
 ├── Sprint_2_daily_scrum_ss_*.jpeg  ← Daily Scrum görselleri
->>>>>>> origin/master
 └── .env                      ← API key (git'e ekleme!)
 ```
