@@ -1,60 +1,45 @@
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
-from pydantic import BaseModel,Field
+from pydantic import BaseModel, Field
 from dotenv import load_dotenv
+
 load_dotenv()
 
+
 class AnswerResponse(BaseModel):
-    answer:str=Field(description="Kullanıcıya verilecek cevap")
+    answer: str = Field(description="Kullanıcıya verilecek hukuki cevap")
 
 
-llm=ChatOpenAI(
-    model="gpt-4o-mini",
-    temperature=0.2
-)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
 
+answer_llm = llm.with_structured_output(AnswerResponse)
 
-answer_llm=llm.with_structured_output(
-    AnswerResponse
-)
-
-
-generate_answer_prompt="""
+generate_answer_prompt = """
 Sen HakkımVar isimli kira hukuku AI asistanısın.
 
 Görevin kullanıcı sorularına hukuki bilgi vermektir.
 
 Kurallar:
-
-- Sadece verilen kaynaklara dayanarak cevap ver.
-- Kanun maddesi varsa belirt.
+- Sadece verilen hukuki kaynaklara dayanarak cevap ver.
+- İlgili kanun maddelerini belirt.
 - Hukuki tavsiye verme.
 - Kesin karar ifadeleri kullanma.
-- Kullanıcıya anlaşılır Türkçe ile cevap ver.
-- Kaynakta bilgi yoksa bunu açıkça belirt.
+- Anlaşılır Türkçe kullan.
+- Kaynaklarda bilgi yoksa bunu açıkça belirt.
+"""
 
-Kaynak Bilgileri:
+human_prompt = """
+Hukuki Kaynaklar:
 {context}
-
 
 Kullanıcı Sorusu:
 {question}
-
-
-Cevap:
 """
 
+prompt = ChatPromptTemplate.from_messages([
+    ("system", generate_answer_prompt),
+    MessagesPlaceholder(variable_name="messages"),  # Geçmiş mesajlar buraya girer
+    ("human", human_prompt),
+])
 
-def generate_answer_chain(question,context):
-
-    prompt=generate_answer_prompt.format(
-        question=question,
-        context=context
-    )
-
-
-    response=answer_llm.invoke(
-        prompt
-    )
-
-
-    return response.answer
+generate_chain = prompt | answer_llm

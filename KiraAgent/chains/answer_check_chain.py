@@ -1,60 +1,66 @@
 from langchain_openai import ChatOpenAI
-from pydantic import BaseModel,Field
+from pydantic import BaseModel, Field
 from dotenv import load_dotenv
+from langchain_core.prompts import ChatPromptTemplate
+
 load_dotenv()
 
+
 class AnswerCheckResult(BaseModel):
-    is_valid:bool=Field(description="Cevap geçerli mi")
-    score:int=Field(description="Cevap kalite puanı 1-10")
-    reason:str=Field(description="Kontrol sonucu açıklaması")
-    should_regenerate:bool=Field(description="Cevap tekrar oluşturulmalı mı")
+
+    is_valid: bool = Field(
+        description="Cevap geçerli mi"
+    )
+
+    score: int = Field(
+        description="Cevap kalite puanı 1-10"
+    )
 
 
-llm=ChatOpenAI(
+llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0
 )
 
 
-checker_llm=llm.with_structured_output(
+checker_llm = llm.with_structured_output(
     AnswerCheckResult
 )
 
 
-answer_check_prompt="""
+answer_check_prompt = """
 Sen HakkımVar hukuk AI sisteminde cevap kontrol ajanısın.
 
-Görevin oluşturulan cevabı kontrol etmektir.
+Görevin oluşturulan hukuki cevabı kontrol etmektir.
 
 Kontrol kriterleri:
 
-1- Cevap kullanıcının sorusuna cevap veriyor mu?
-2- Hukuki kaynaklara dayanıyor mu?
-3- Yanlış veya uydurma bilgi içeriyor mu?
-4- Kesin hukuki tavsiye veriyor mu?
-5- Açıklama yeterli mi?
+1- Cevap kullanıcının sorusuna uygun mu?
+2- Cevap verilen hukuki kaynaklarla destekleniyor mu?
+3- Uydurma madde veya yanlış bilgi içeriyor mu?
+4- Hukuki tavsiye yerine hukuki bilgi formatında mı?
+5- Açıklama yeterli ve anlaşılır mı?
 
-Eğer cevap yetersizse tekrar oluşturulmalıdır.
+Eğer cevap hatalı veya yetersiz ise tekrar oluşturulması gerekir.
 
+"""
+
+human_prompt="""
 Kullanıcı Sorusu:
 {question}
 
-Kullanılan Kaynak:
+
+Hukuki Kaynaklar:
 {context}
+
 
 Oluşturulan Cevap:
 {answer}
 """
 
+prompts=ChatPromptTemplate.from_messages([
+    ("system",answer_check_prompt),
+    ("human", human_prompt)
+])
 
-def answer_check_chain(question,context,answer):
-
-    prompt=answer_check_prompt.format(
-        question=question,
-        context=context,
-        answer=answer
-    )
-
-    result=checker_llm.invoke(prompt)
-
-    return result
+answer_check_chain= prompts | checker_llm

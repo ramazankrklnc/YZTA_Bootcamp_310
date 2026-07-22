@@ -5,28 +5,20 @@ from langchain_core.messages import BaseMessage
 
 class AgentState(TypedDict):
 
-    session_id:str
-    # Kullanıcı mesajı
+    session_id: str
+
     user_question: str
 
-    # Router sonucu
-    intent: Optional[str]
+    route:bool
 
     router_reason: Optional[str]
 
-    # RAG
-    retrieved_documents: List[Document]
+    retrieved_documents: List[str]
 
-    # Sözleşme analizi
-    contract_text: Optional[str]
+    answer: str
 
-    contract_analysis: Optional[str]
+    answer_valid: bool
 
-    # Hukuki cevap
-    legal_answer: Optional[str]
+    answer_score: int
 
-    # Final cevap
-    final_answer: Optional[str]
-
-    # Conversation memory
     messages: List[BaseMessage]

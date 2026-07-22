@@ -1,7 +1,7 @@
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
-from langchain_core.documents import Document
 from dotenv import load_dotenv
+
 load_dotenv()
 
 # =====================================================
@@ -12,7 +12,6 @@ embeddings = OpenAIEmbeddings(
     model="text-embedding-3-small"
 )
 
-
 # =====================================================
 # VECTOR DATABASE
 # =====================================================
@@ -22,7 +21,6 @@ vector_db = Chroma(
     embedding_function=embeddings,
     collection_name="kira_hukuku_knowledge"
 )
-
 
 # =====================================================
 # RETRIEVER
@@ -35,40 +33,26 @@ retriever = vector_db.as_retriever(
     }
 )
 
-
 # =====================================================
 # RETRIEVAL CHAIN
 # =====================================================
 
 def retrieval_chain(question: str):
     """
-    Kullanıcı sorusuna göre hukuki kaynakları getirir.
+    Kullanıcı sorusuna göre hukuki kaynakları getirir ve metin formatına dönüştürür.
     """
+    documents = retriever.invoke(question)
 
-    documents = retriever.invoke(
-        question
-    )
-
-
-    context = []
+    retrieved_documents = []
 
     for doc in documents:
-
-        content = f"""
-Kaynak:
-{doc.metadata.get("kaynak_dosya")}
-
-Madde:
-{doc.metadata.get("madde_no")}
-
+        content = f"""Kaynak: {doc.metadata.get("kaynak_dosya")}
+Madde: {doc.metadata.get("madde_no")}
 İçerik:
-{doc.page_content}
-"""
+{doc.page_content}"""
 
-        context.append(content)
-
+        retrieved_documents.append(content)
 
     return {
-        "documents": documents,
-        "context": "\n\n".join(context)
+        "retrieved_documents": retrieved_documents
     }

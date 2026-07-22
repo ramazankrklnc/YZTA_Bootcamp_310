@@ -3,18 +3,10 @@ from chains.router_chain import router_chain
 
 def router_node(state):
 
-    question = state["user_question"]
+    question = state.get("user_question", "")
 
-
-    result = router_chain(
-        question
-    )
-
+    result = router_chain.invoke({"question":question})
 
     return {
-
-        "intent": result.intent,
-
-        "router_reason": result.reason
-
+        "route":result.route
     }

@@ -1,76 +1,58 @@
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
+from langchain_core.prompts import ChatPromptTemplate
+
 load_dotenv()
+
 
 class RouterOutput(BaseModel):
 
-    intent: str = Field(
-        description="""
-        Kullanıcı isteğinin kategorisi.
-        """
+    route: bool = Field(
+        description="Kullanıcının sorusu kira hukuku ile ilgilimi değil mi ?"
     )
 
-    reason: str = Field(
-        description="Karar verme sebebi"
-    )
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0
 )
-router_llm = llm.with_structured_output(
-    RouterOutput
-)
+
+
+
+
 
 router_prompt = """
+Sen HakkımVar kira hukuku AI sisteminin
+soru yönlendirme ajanısın.
 
-Sen HakkımVar isimli kira hukuku
-AI asistanının router agentısın.
-
-Görevin kullanıcı isteğini analiz edip
-doğru agent'a yönlendirmek.
+Kullanıcının sorusunu analiz et.
 
 Kategori seçenekleri:
 
-contract_analysis:
-Kira sözleşmesi incelenmesi,
-madde kontrolü.
-
 legal_question:
-Kira hukuku hakkında genel soru.
-
-rent_increase_check:
-Kira artışı, zam oranı,
-TÜFE kontrolü.
-
-notice_generation:
-İhtarname veya resmi belge oluşturma.
-
-timeline_tracking:
-Süre, tarih, hatırlatma.
-
-general_chat:
-Genel konuşma.
+Kira hukuku, kiracı hakları,
+ev sahibi hakları, kira artışı,
+tahliye, depozito, sözleşme süresi
+gibi hukuki sorular.
 
 out_of_scope:
-Kira hukuku dışındaki konular.
+Kira hukuku ile ilgisi olmayan sorular.
 
 
-Kullanıcı mesajı:
-{question}
 
 """
 
+human_prompt="""
+Kullanıcı Sorusu:
+{question}
+"""
+router_llm = llm.with_structured_output(
+    RouterOutput
+)
+prompt = ChatPromptTemplate.from_messages([
+    ("system", router_prompt),
+    ("human", human_prompt),
+])
 
-def router_chain(question:str):
-
-    prompt = router_prompt.format(
-        question=question
-    )
-
-
-    response = router_llm.invoke(prompt)
-
-
-    return response
+router_chain= prompt | router_llm
