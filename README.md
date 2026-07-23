@@ -411,7 +411,7 @@ YZTA_Bootcamp_310/
 | **Sprint 1** | Hafta 1–2 | PDF işleme, ChromaDB embedding, vektör altyapısı | Tamamlandı |
 | **Sprint 2** | Hafta 3–4 | LangGraph çoklu ajan, FastAPI backend, Streamlit UI | Tamamlandı |
 | **Sprint 3** | Hafta 5 | mem0 uzun dönem hafıza, paralel madde değerlendirme, PDF export | Devam ediyor |
-| **Sprint 4** | Hafta 6 | Canlı deploy, yük testi, demo hazırlığı | Planlandı |
+| **Sprint 3** | Hafta 6 | Canlı deploy, yük testi, demo hazırlığı | Devam Ediyor |
 
 ---
 
@@ -512,6 +512,31 @@ Sprint süresince Daily Scrum toplantıları **WhatsApp** yazışmaları ve **Go
 ![Daily Scrum 3](Sprint2/Sprint_2_daily_scrum_ss_3.jpeg)
 
 </details>
+
+---
+
+## ✅ Sprint Review
+
+Sprint 2 kapsamında yapay zekâ destekli kiracı hak asistanının temel fonksiyonları tamamlanarak çalışır bir MVP oluşturulmuştur.
+
+- LangGraph tabanlı çoklu ajan mimarisi başarıyla geliştirildi.
+- Contract Analyzer, Legal Reasoner ve Rights Advisor ajanları sisteme entegre edildi.
+- FastAPI backend ve temel API servisleri tamamlandı.
+- Streamlit tabanlı kullanıcı arayüzü geliştirilerek uçtan uca analiz akışı sağlandı.
+- TÜFE bazlı kira artışı kontrolü ve ihtarname oluşturma özellikleri sisteme eklendi.
+- RAG altyapısı ajan sistemiyle entegre edilerek hukuki değerlendirmelerin ilgili mevzuata dayandırılması sağlandı.
+
+---
+
+## 🔄 Sprint Retrospective
+
+| Karar | Açıklama |
+|-------|----------|
+| Takım İletişimi | Daily Scrum toplantıları ve düzenli ekip iletişimi sayesinde sprint boyunca yaşanan teknik sorunlar hızlı bir şekilde çözüldü. Bu iletişim düzeninin sonraki sprintlerde de sürdürülmesine karar verildi. |
+| Kod Entegrasyonu | Modüllerin entegrasyon sürecini daha verimli yönetebilmek amacıyla geliştirmelerin daha sık birleştirilmesi ve ara entegrasyon kontrollerinin artırılması planlandı. |
+| Performans ve Geliştirme | Analiz süresini iyileştirmek ve kullanıcı deneyimini artırmak amacıyla performans optimizasyonları ile yeni özelliklerin Sprint 3 kapsamında önceliklendirilmesine karar verildi. |
+
+---
 
 ### Hızlı Başlangıç
 
