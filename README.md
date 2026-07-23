@@ -492,17 +492,6 @@ Sprint1/
 └── Sprint_1_daily_scrum_ss_*.jpg/png  ← Daily Scrum görselleri
 ```
 
-### Sprint Planı
-
-| Sprint | Dönem | Hedef |
-|---|---|---|
-| **Sprint 1** | 1–2. Hafta | Temel altyapı, PDF işleme, embedding |
-| **Sprint 2** | 3–4. Hafta | Ajan sistemi, RAG, FastAPI, UI |
-| **Sprint 3** | 5. Hafta | İhtarname üretimi, PDF export |
-| **Sprint 4** | 6. Hafta | Canlı ortam, testler, demo |
-
----
-
 ## Sprint 2 — Kurulum ve Çalıştırma
 
 > **Sprint Dönemi:** 3–4. Haftalar | **Hedef:** LangGraph çoklu ajan, FastAPI backend, Streamlit UI
