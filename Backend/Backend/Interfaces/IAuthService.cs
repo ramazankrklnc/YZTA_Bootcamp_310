@@ -4,7 +4,8 @@ namespace Backend.Interfaces
 {
     public interface IAuthService
     {
-        Task<bool> RegisterAsync(RegisterRequest request);
-        Task<string?> LoginAsync(LoginRequest request); 
+        Task<AuthResponse> RegisterAsync(RegisterRequest request);
+
+        Task<AuthResponse> LoginAsync(LoginRequest request);
     }
 }
