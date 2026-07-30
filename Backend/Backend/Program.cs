@@ -4,6 +4,7 @@ using Backend.Repositories;
 using Backend.Services;
 using Backend.Controllers;
 using Microsoft.EntityFrameworkCore;
+using Backend.Helpers;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,9 +30,11 @@ builder.Services.AddScoped<IChatSessionRepository, ChatSessionRepository>();
 
 builder.Services.AddScoped<IChatMessageRepository, ChatMessageRepository>();
 
-//builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
-//builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<JwtHelper>();
+builder.Services.AddScoped<ISessionService, SessionService>();
 
 builder.Services.AddScoped<IPythonAgentService, PythonAgentService>();
 builder.Services.AddHttpClient<IPythonAgentService, PythonAgentService>(client =>

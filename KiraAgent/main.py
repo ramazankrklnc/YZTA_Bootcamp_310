@@ -19,7 +19,7 @@ sessions: Dict[str, List[Any]] = {}
 
 class SoruRequest(BaseModel):
     session_id: Optional[str] = None
-    kullanici_sorusu: str
+    user_question: str
 
 
 class ResetRequest(BaseModel):
@@ -51,7 +51,7 @@ async def soru_sor(data: SoruRequest):
         # Yeni AgentState yapısı ile %100 uyumlu initial_state
         initial_state = {
             "session_id": session_id,
-            "user_question": data.kullanici_sorusu,
+            "user_question": data.user_question,
             "route": False,
             "router_reason": None,
             "retrieved_documents": [],
@@ -67,24 +67,28 @@ async def soru_sor(data: SoruRequest):
         cevap = result.get("answer", "")
 
         # LangChain mesaj geçmişine ekleme
-        mevcut_hafiza.append(HumanMessage(content=data.kullanici_sorusu))
+        mevcut_hafiza.append(HumanMessage(content=data.user_question))
         mevcut_hafiza.append(AIMessage(content=cevap))
 
         sessions[session_id] = mevcut_hafiza
 
         return {
-            "session_id": session_id,
-            "cevap": cevap,
-            "puan": result.get("answer_score", 0),
-            "gecerli": result.get("answer_valid", False),
-            "hafiza_boyutu": len(mevcut_hafiza) // 2  # Soru-Cevap çifti sayısı
-        }
+    "session_id": session_id,
+    "answer": cevap,
+    "score": result.get("answer_score", 0),
+    "is_succes": result.get("answer_valid", False),
+    "memory_cache": len(mevcut_hafiza) // 2
+}
 
     except Exception as e:
+        import traceback
+
+        traceback.print_exc()
+
         raise HTTPException(
-            status_code=500,
-            detail=f"Agent işleminde hata oluştu: {str(e)}"
-        )
+        status_code=500,
+        detail=str(e)
+    )
 
 
 @app.post("/temizle")

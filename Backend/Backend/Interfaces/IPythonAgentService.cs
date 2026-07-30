@@ -5,8 +5,8 @@ namespace Backend.Interfaces
     public interface IPythonAgentService
     {
         Task<PythonAgentResponse> AskQuestionAsync(
-            string question,
-            string sessionId
-            );
+            string sessionId,
+            string question
+        );
     }
 }
