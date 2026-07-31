@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobil_arayuz/LoginPages/terms_bottom_sheet.dart';
+import 'package:mobil_arayuz/services/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -15,9 +16,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
+  final AuthService _authService = AuthService();
+
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
   bool _acceptedTerms = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -28,7 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  void _onRegisterPressed() {
+  void _onRegisterPressed() async {
     if (_formKey.currentState!.validate()) {
       if (!_acceptedTerms) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -41,13 +45,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
         return;
       }
 
-      // Form doğrulandı, kayıt işlemi simülasyonu
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Hesabınız oluşturuluyor...'),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        final response = await _authService.register(
+          fullName: _nameController.text.trim(),
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
+
+        if (!mounted) return;
+
+        // Başarılı kayıt bildirimi gösterip Giriş Yap ekranına döndürüyoruz
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Kayıt başarıyla tamamlandı! Giriş yapabilirsiniz.'),
+            backgroundColor: Colors.green,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+
+        Navigator.pop(context); // Giriş ekranına geri döner
+      } catch (e) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString().replaceAll('Exception: ', '')),
+            backgroundColor: Colors.red.shade600,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
     }
   }
 
@@ -115,7 +151,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     icon: Icons.email_outlined,
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null || value.trim().isEmpty) {
                       return 'Lütfen e-posta adresinizi girin';
                     }
                     if (!value.contains('@') || !value.contains('.')) {
@@ -193,7 +229,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 20),
 
-                // 6. SÖZLEŞME VE ONAY
+                // 6. SÖZLEŞME VE ONAY (showModalBottomSheet KULLANIMI)
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -217,17 +253,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TermsBottomSheet(
-                                onAccept: () {
-                                  setState(() {
-                                    _acceptedTerms = true;
-                                  });
-                                  // BURADAKİ Navigator.pop(context); SATIRINI SİLDİK
-                                },
-                              ),
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (context) => TermsBottomSheet(
+                              onAccept: () {
+                                setState(() {
+                                  _acceptedTerms = true;
+                                });
+                              },
                             ),
                           );
                         },
@@ -244,6 +279,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 style: TextStyle(
                                   color: Colors.blue.shade800,
                                   fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
                                 ),
                               ),
                               const TextSpan(text: ' ve '),
@@ -252,6 +288,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 style: TextStyle(
                                   color: Colors.blue.shade800,
                                   fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
                                 ),
                               ),
                               const TextSpan(
@@ -267,9 +304,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 32),
 
-                // 7. KAYIT OL BUTONU
+                // 7. KAYIT OL BUTONU (LOADING INDICATOR ENTEGRASYONLU)
                 ElevatedButton(
-                  onPressed: _onRegisterPressed,
+                  onPressed: _isLoading ? null : _onRegisterPressed,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue.shade800,
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -278,14 +315,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     elevation: 2,
                   ),
-                  child: const Text(
-                    'Kayıt Ol',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: _isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Text(
+                          'Kayıt Ol',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
                 const SizedBox(height: 24),
 
@@ -322,7 +368,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  // Tekrarlanan Label widget'ı için yardımcı fonksiyon
   Widget _buildLabel(String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
@@ -337,7 +382,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  // Tekrarlanan InputDecoration için yardımcı fonksiyon
   InputDecoration _buildInputDecoration({
     required String hintText,
     required IconData icon,

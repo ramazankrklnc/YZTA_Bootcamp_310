@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobil_arayuz/LoginPages/Register.dart';
+import 'package:mobil_arayuz/services/auth_service.dart';
+import 'package:mobil_arayuz/utils/token_manager.dart';
+import 'package:mobil_arayuz/pages/home_screen.dart'; // HomeScreen dosyanın yoluna göre düzenleyebilirsin
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,9 +15,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final AuthService _authService = AuthService();
 
   bool _isPasswordVisible = false;
   bool _rememberMe = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -23,19 +28,62 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _onLoginPressed() {
+  void _onLoginPressed() async {
     if (_formKey.currentState!.validate()) {
-      // Form doğrulandı, yönlendirme simülasyonu yapılabilir
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Giriş yapılıyor...')));
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        final response = await _authService.login(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+        );
+
+        if (!mounted) return;
+
+        // C# API'den dönen response ve JWT Token kontrolü
+        if (response != null && response["token"] != null) {
+          final String jwtToken = response["token"];
+
+          // JWT Token'ı genel erişim için TokenManager'a kaydediyoruz
+          TokenManager.setToken(jwtToken);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Giriş başarılı! Hoş geldiniz.'),
+              backgroundColor: Colors.green,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+
+          // Ana Sayfaya yönlendirme (Geri basınca Login'e dönmemesi için pushReplacement kullanıldı)
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+          );
+        }
+      } catch (e) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString().replaceAll('Exception: ', '')),
+            backgroundColor: Colors.red.shade600,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -115,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null || value.trim().isEmpty) {
                       return 'Lütfen e-posta adresinizi girin';
                     }
                     if (!value.contains('@')) {
@@ -235,7 +283,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // 5. GİRİŞ YAP BUTONU
                 ElevatedButton(
-                  onPressed: _onLoginPressed,
+                  onPressed: _isLoading ? null : _onLoginPressed,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue.shade800,
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -244,19 +292,28 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     elevation: 2,
                   ),
-                  child: const Text(
-                    'Giriş Yap',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: _isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Text(
+                          'Giriş Yap',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
 
                 const SizedBox(height: 24),
 
-                // 6. SOSYAL / HIZLI GİRİŞ SEÇENEKLERİ (İSTEĞE BAĞLI)
+                // 6. SOSYAL / HIZLI GİRİŞ SEÇENEKLERİ
                 Row(
                   children: [
                     Expanded(child: Divider(color: Colors.grey.shade300)),
