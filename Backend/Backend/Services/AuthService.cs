@@ -8,13 +8,18 @@ namespace Backend.Services
     public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepository;
+        private readonly JwtHelper _jwtHelper;
+
 
         public AuthService(
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            JwtHelper jwtHelper
         )
         {
             _userRepository = userRepository;
+            _jwtHelper = jwtHelper;
         }
+
 
 
         public async Task<AuthResponse> RegisterAsync(
@@ -39,10 +44,14 @@ namespace Backend.Services
             var newUser = new User
             {
                 FullName = request.FullName,
+
                 Email = request.Email,
-                PasswordHash = PasswordHasher.HashPassword(
+
+                PasswordHash =
+                PasswordHasher.HashPassword(
                     request.Password
                 ),
+
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -54,14 +63,27 @@ namespace Backend.Services
             await _userRepository.SaveAsync();
 
 
+
+            var token =
+                _jwtHelper.GenerateToken(
+                    newUser.Id,
+                    newUser.Email
+                );
+
+
             return new AuthResponse
             {
                 UserId = newUser.Id,
+
                 FullName = newUser.FullName,
+
                 Email = newUser.Email,
-                Token = ""
+
+                Token = token
             };
         }
+
+
 
 
 
@@ -84,11 +106,13 @@ namespace Backend.Services
             }
 
 
+
             bool isCorrect =
                 PasswordHasher.VerifyPassword(
                     request.Password,
                     user.PasswordHash
                 );
+
 
 
             if (!isCorrect)
@@ -99,15 +123,26 @@ namespace Backend.Services
             }
 
 
+
+            var token =
+                _jwtHelper.GenerateToken(
+                    user.Id,
+                    user.Email
+                );
+
+
+
             return new AuthResponse
             {
                 UserId = user.Id,
+
                 FullName = user.FullName,
+
                 Email = user.Email,
-                Token = ""
+
+                Token = token
             };
 
         }
-
     }
 }

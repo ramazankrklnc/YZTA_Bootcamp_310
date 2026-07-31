@@ -1,10 +1,13 @@
 ﻿using Backend.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class SessionController : ControllerBase
     {
 
@@ -20,6 +23,18 @@ namespace Backend.Controllers
 
 
 
+        private int GetUserId()
+        {
+            return int.Parse(
+                User.FindFirst(
+                    ClaimTypes.NameIdentifier
+                )!.Value
+            );
+        }
+
+
+
+
         // Yeni sohbet oluştur
 
         [HttpPost("create")]
@@ -27,9 +42,7 @@ namespace Backend.Controllers
         {
             try
             {
-
-                // JWT gelene kadar test user
-                int userId = 1;
+                int userId = GetUserId();
 
 
                 var result =
@@ -43,12 +56,10 @@ namespace Backend.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(
-                    new
-                    {
-                        message = ex.Message
-                    }
-                );
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
             }
         }
 
@@ -60,11 +71,9 @@ namespace Backend.Controllers
         [HttpGet("list")]
         public async Task<IActionResult> GetSessions()
         {
-
             try
             {
-
-                int userId = 1;
+                int userId = GetUserId();
 
 
                 var result =
@@ -79,15 +88,13 @@ namespace Backend.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(
-                    new
-                    {
-                        message = ex.Message
-                    }
-                );
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
             }
-
         }
+
 
 
 
@@ -99,11 +106,9 @@ namespace Backend.Controllers
             int id
         )
         {
-
             try
             {
-
-                int userId = 1;
+                int userId = GetUserId();
 
 
                 var result =
@@ -116,35 +121,28 @@ namespace Backend.Controllers
 
                 if (!result)
                 {
-                    return NotFound(
-                        new
-                        {
-                            message =
-                            "Session bulunamadı."
-                        }
-                    );
+                    return NotFound(new
+                    {
+                        message =
+                        "Session bulunamadı."
+                    });
                 }
 
 
-                return Ok(
-                    new
-                    {
-                        message =
-                        "Sohbet silindi."
-                    }
-                );
+                return Ok(new
+                {
+                    message =
+                    "Sohbet silindi."
+                });
 
             }
             catch (Exception ex)
             {
-                return BadRequest(
-                    new
-                    {
-                        message = ex.Message
-                    }
-                );
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
             }
-
         }
 
     }

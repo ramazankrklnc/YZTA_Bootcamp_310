@@ -1,14 +1,21 @@
 using Backend.Data;
+using Backend.Helpers;
 using Backend.Interfaces;
 using Backend.Repositories;
 using Backend.Services;
-using Backend.Controllers;
+
 using Microsoft.EntityFrameworkCore;
-using Backend.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+// Database
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -18,43 +25,147 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     );
 });
 
-// Add services to the container.
+
+// Controllers
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
+// Swagger
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition(
+        "Bearer",
+        new OpenApiSecurityScheme
+        {
+            Name = "Authorization",
+            Type = SecuritySchemeType.Http,
+            Scheme = "Bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Description =
+            "JWT Token giriniz. Örnek: Bearer {token}"
+        });
+
+
+    options.AddSecurityRequirement(
+        new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference =
+                    new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new string[] {}
+            }
+        });
+});
+
+
+// Repository
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IChatSessionRepository, ChatSessionRepository>();
 
 builder.Services.AddScoped<IChatMessageRepository, ChatMessageRepository>();
 
+
+// Services
+
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddScoped<IChatService, ChatService>();
-builder.Services.AddScoped<JwtHelper>();
+
 builder.Services.AddScoped<ISessionService, SessionService>();
 
-builder.Services.AddScoped<IPythonAgentService, PythonAgentService>();
-builder.Services.AddHttpClient<IPythonAgentService, PythonAgentService>(client =>
+builder.Services.AddScoped<JwtHelper>();
+
+
+// Python Agent
+
+builder.Services.AddHttpClient<IPythonAgentService, PythonAgentService>(
+client =>
 {
-    client.BaseAddress = new Uri("http://localhost:8000");
+    client.BaseAddress =
+        new Uri("http://localhost:8000");
 });
+
+
+
+// JWT
+
+builder.Services
+.AddAuthentication(
+    JwtBearerDefaults.AuthenticationScheme
+)
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters =
+        new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+
+            ValidateAudience = true,
+
+            ValidateLifetime = true,
+
+            ValidateIssuerSigningKey = true,
+
+
+            ValidIssuer =
+            builder.Configuration["Jwt:Issuer"],
+
+
+            ValidAudience =
+            builder.Configuration["Jwt:Audience"],
+
+
+            IssuerSigningKey =
+            new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(
+                    builder.Configuration["Jwt:Key"]!
+                )
+            )
+        };
+});
+
+
+// Build
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+
+// Middleware
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
+
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
+
+
+// JWT sýrasý önemli
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
+
 app.MapControllers();
+
 
 app.Run();
