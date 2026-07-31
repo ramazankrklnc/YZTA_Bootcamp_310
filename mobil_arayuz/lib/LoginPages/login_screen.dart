@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobil_arayuz/LoginPages/Register.dart';
+import 'package:mobil_arayuz/pages/home_dashboard_screen.dart';
 import 'package:mobil_arayuz/services/auth_service.dart';
 import 'package:mobil_arayuz/utils/token_manager.dart';
 import 'package:mobil_arayuz/pages/home_screen.dart'; // HomeScreen dosyanın yoluna göre düzenleyebilirsin
@@ -60,7 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
           // Ana Sayfaya yönlendirme (Geri basınca Login'e dönmemesi için pushReplacement kullanıldı)
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            MaterialPageRoute(
+              builder: (context) => const HomeDashboardScreen(),
+            ),
           );
         }
       } catch (e) {

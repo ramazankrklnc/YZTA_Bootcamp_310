@@ -50,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
       if (response != null && response is List) {
         setState(() {
           _sessions = response.map((s) => ChatSession.fromJson(s)).toList();
-          // Eğer oturum varsa ilkini varsayılan olarak seç
           if (_sessions.isNotEmpty && _activeSessionId == null) {
             _activeSessionId = _sessions.first.id;
           }
@@ -59,14 +58,19 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       _showSnackBar('Oturumlar yüklenirken hata oluştu: ${e.toString()}');
     } finally {
-      setState(() => _isLoadingSessions = false);
+      if (mounted) {
+        setState(() => _isLoadingSessions = false);
+      }
     }
   }
 
   // 2. Yeni Oturum (Sohbet) Oluşturma
-  Future<void> _createNewSession() async {
+  Future<int?> _createNewSession({bool closeDrawer = true}) async {
     final token = TokenManager.token;
-    if (token == null) return;
+    if (token == null) {
+      _showSnackBar('Oturum süreniz dolmuş, lütfen tekrar giriş yapın.');
+      return null;
+    }
 
     try {
       final response = await _sessionService.createSession(token);
@@ -75,14 +79,18 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _sessions.insert(0, newSession);
           _activeSessionId = newSession.id;
-          _messages.clear(); // Yeni oturum için chat alanını temizle
+          _messages.clear();
         });
-        Navigator.pop(context); // Drawer'ı kapat
-        _showSnackBar('Yeni sohbet oturumu oluşturuldu.');
+
+        if (closeDrawer && Navigator.canPop(context)) {
+          Navigator.pop(context); // Drawer açık ise kapat
+        }
+        return newSession.id;
       }
     } catch (e) {
       _showSnackBar('Oturum oluşturulamadı: ${e.toString()}');
     }
+    return null;
   }
 
   // 3. Yapay Zekâya Soru Sorma (Chat)
@@ -90,9 +98,25 @@ class _HomeScreenState extends State<HomeScreen> {
     final question = _messageController.text.trim();
     final token = TokenManager.token;
 
-    if (question.isEmpty || _activeSessionId == null || token == null) return;
+    if (question.isEmpty) return;
 
-    // Kullanıcı mesajını arayüze anında ekle
+    if (token == null) {
+      _showSnackBar('Lütfen tekrar giriş yapın.');
+      return;
+    }
+
+    // Eğer aktif bir oturum yoksa arka planda otomatik yeni oturum oluştur
+    int? currentSessionId = _activeSessionId;
+    if (currentSessionId == null) {
+      setState(() => _isSendingMessage = true);
+      currentSessionId = await _createNewSession(closeDrawer: false);
+      if (currentSessionId == null) {
+        setState(() => _isSendingMessage = false);
+        return; // Oturum oluşturulamazsa işlemi durdur
+      }
+    }
+
+    // Kullanıcı mesajını ekrana anında ekle
     final userMessage = Message(
       id: DateTime.now().millisecondsSinceEpoch,
       isUser: true,
@@ -110,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     try {
       final chatResponse = await _chatService.askQuestion(
-        sessionId: _activeSessionId!,
+        sessionId: currentSessionId,
         question: question,
         token: token,
       );
@@ -131,7 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       _showSnackBar('Cevap alınamadı: ${e.toString()}');
     } finally {
-      setState(() => _isSendingMessage = false);
+      if (mounted) {
+        setState(() => _isSendingMessage = false);
+      }
     }
   }
 
@@ -168,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.add_comment_outlined),
             tooltip: 'Yeni Sohbet',
-            onPressed: _createNewSession,
+            onPressed: () => _createNewSession(closeDrawer: false),
           ),
         ],
       ),
@@ -191,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 'Yeni Analiz / Sohbet',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              onTap: _createNewSession,
+              onTap: () => _createNewSession(closeDrawer: true),
             ),
             const Divider(),
             const Padding(
@@ -240,8 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             setState(() {
                               _activeSessionId = session.id;
-                              _messages
-                                  .clear(); // Farklı oturuma geçince mesajları temizle/yeniden yükle
+                              _messages.clear();
                             });
                             Navigator.pop(context);
                           },
@@ -354,7 +379,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           vertical: 10,
                         ),
                       ),
-                      onSubmitted: (_) => _sendMessage(),
+                      onSubmitted: (_) =>
+                          _isSendingMessage ? null : _sendMessage(),
                     ),
                   ),
                   const SizedBox(width: 8),

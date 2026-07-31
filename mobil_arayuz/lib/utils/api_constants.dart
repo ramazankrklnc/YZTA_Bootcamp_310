@@ -1,12 +1,13 @@
 class ApiConstants {
   // Bu kısmı güncelleyeceğiz NGROK üzerinden test etmek için
-  static const String baseUrl = "https://10.0.2.2:7127/api";
+  static const String baseUrl =
+      "https://nonexistentially-nonstatic-reita.ngrok-free.dev";
 
-  static const String login = "$baseUrl/auth/login";
-  static const String register = "$baseUrl/auth/register";
+  static const String login = "$baseUrl/api/Auth/login";
+  static const String register = "$baseUrl/api/Auth/register";
 
-  static const String createSession = "$baseUrl/session/create";
-  static const String getSessions = "$baseUrl/session";
+  static const String createSession = "$baseUrl/api/Session/create";
+  static const String getSessions = "$baseUrl/api/Session/list";
 
-  static const String askQuestion = "$baseUrl/chat/ask";
+  static const String askQuestion = "$baseUrl/api/Chat/ask";
 }
