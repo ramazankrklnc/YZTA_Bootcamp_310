@@ -1,8 +1,7 @@
-﻿using Backend.Entities;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Backend.Helpers
 {
@@ -10,42 +9,53 @@ namespace Backend.Helpers
     {
         private readonly IConfiguration _configuration;
 
-        public JwtHelper(IConfiguration configuration)
+
+        public JwtHelper(
+            IConfiguration configuration
+        )
         {
             _configuration = configuration;
         }
 
-        public string GenerateToken(User user)
+
+
+        public string GenerateToken(
+            int userId,
+            string email
+        )
         {
+
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
-                new Claim(ClaimTypes.Name,user.FullName),
-                new Claim(ClaimTypes.Email,user.Email)
-            };
+                new Claim(
+                    ClaimTypes.NameIdentifier,
+                    userId.ToString()
+                ),
 
+                new Claim(
+                    ClaimTypes.Email,
+                    email
+                )
+            };
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(
                     _configuration["Jwt:Key"]!
-                ));
-
-            var credentials = new SigningCredentials(
-                key,
-                SecurityAlgorithms.HmacSha256
+                )
             );
-
+            var credentials =
+                new SigningCredentials(
+                    key,
+                    SecurityAlgorithms.HmacSha256
+                );
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(
-                    Convert.ToDouble(
-                        _configuration["Jwt:ExpireMinutes"]
-                    )),
+                expires: DateTime.UtcNow.AddDays(7),
                 signingCredentials: credentials
             );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return new JwtSecurityTokenHandler()
+                .WriteToken(token);
         }
     }
 }

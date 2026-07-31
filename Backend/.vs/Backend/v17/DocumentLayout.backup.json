@@ -3,48 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\entities\\chatsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\entities\\chatsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\controllers\\sessioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\controllers\\sessioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\services\\sessionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\services\\sessionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\models\\python\\pythonagentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\models\\python\\pythonagentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\models\\python\\pythonagentresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\models\\python\\pythonagentresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\interfaces\\ipythonagentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\interfaces\\ipythonagentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\services\\pythonagentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\services\\pythonagentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\helpers\\jwthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\helpers\\jwthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\helpers\\passwordhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\helpers\\passwordhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\models\\authresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\models\\authresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|c:\\users\\merto\\desktop\\yapayzekaakademisi\\yzta_bootcamp_310\\backend\\backend\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E870705-0B2B-437B-91F9-9CB25EE06C1D}|Backend\\Backend.csproj|solutionrelative:backend\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -63,144 +39,66 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ChatSession.cs",
-              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Entities\\ChatSession.cs",
-              "RelativeDocumentMoniker": "Backend\\Entities\\ChatSession.cs",
-              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Entities\\ChatSession.cs",
-              "RelativeToolTip": "Backend\\Entities\\ChatSession.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
+              "Title": "SessionController.cs",
+              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Controllers\\SessionController.cs",
+              "RelativeDocumentMoniker": "Backend\\Controllers\\SessionController.cs",
+              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Controllers\\SessionController.cs",
+              "RelativeToolTip": "Backend\\Controllers\\SessionController.cs",
+              "ViewState": "AgIAAJQAAAAAAAAAAAAAAJQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-30T11:44:01.02Z",
+              "WhenOpened": "2026-07-31T10:51:33.064Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "SessionService.cs",
-              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Services\\SessionService.cs",
-              "RelativeDocumentMoniker": "Backend\\Services\\SessionService.cs",
-              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Services\\SessionService.cs",
-              "RelativeToolTip": "Backend\\Services\\SessionService.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAuwB8AAAArAAAAAAAAAA==",
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Backend\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Backend\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAYwEsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-30T11:43:22.665Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PythonAgentResponse.cs",
-              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Models\\Python\\PythonAgentResponse.cs",
-              "RelativeDocumentMoniker": "Backend\\Models\\Python\\PythonAgentResponse.cs",
-              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Models\\Python\\PythonAgentResponse.cs",
-              "RelativeToolTip": "Backend\\Models\\Python\\PythonAgentResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-30T11:25:33.647Z",
+              "WhenOpened": "2026-07-31T10:45:37.175Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "PythonAgentRequest.cs",
-              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Models\\Python\\PythonAgentRequest.cs",
-              "RelativeDocumentMoniker": "Backend\\Models\\Python\\PythonAgentRequest.cs",
-              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Models\\Python\\PythonAgentRequest.cs",
-              "RelativeToolTip": "Backend\\Models\\Python\\PythonAgentRequest.cs",
+              "Title": "AuthResponse.cs",
+              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Models\\AuthResponse.cs",
+              "RelativeDocumentMoniker": "Backend\\Models\\AuthResponse.cs",
+              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Models\\AuthResponse.cs",
+              "RelativeToolTip": "Backend\\Models\\AuthResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-31T10:37:28.177Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Interfaces\\IAuthService.cs",
+              "RelativeDocumentMoniker": "Backend\\Interfaces\\IAuthService.cs",
+              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Interfaces\\IAuthService.cs",
+              "RelativeToolTip": "Backend\\Interfaces\\IAuthService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-30T11:25:31.951Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IPythonAgentService.cs",
-              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Interfaces\\IPythonAgentService.cs",
-              "RelativeDocumentMoniker": "Backend\\Interfaces\\IPythonAgentService.cs",
-              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Interfaces\\IPythonAgentService.cs",
-              "RelativeToolTip": "Backend\\Interfaces\\IPythonAgentService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-30T11:24:22.203Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "PythonAgentService.cs",
-              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Services\\PythonAgentService.cs",
-              "RelativeDocumentMoniker": "Backend\\Services\\PythonAgentService.cs",
-              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Services\\PythonAgentService.cs",
-              "RelativeToolTip": "Backend\\Services\\PythonAgentService.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAqwDgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-30T11:23:40.358Z",
+              "WhenOpened": "2026-07-31T10:36:18.603Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Program.cs",
-              "RelativeDocumentMoniker": "Backend\\Program.cs",
-              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Program.cs",
-              "RelativeToolTip": "Backend\\Program.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAWwCcAAABRAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-30T11:22:58.801Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "JwtHelper.cs",
-              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Helpers\\JwtHelper.cs",
-              "RelativeDocumentMoniker": "Backend\\Helpers\\JwtHelper.cs",
-              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Helpers\\JwtHelper.cs",
-              "RelativeToolTip": "Backend\\Helpers\\JwtHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADIAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-30T11:22:43.594Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\appsettings.json",
-              "RelativeDocumentMoniker": "Backend\\appsettings.json",
-              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\appsettings.json",
-              "RelativeToolTip": "Backend\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-07-30T11:22:26.727Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "PasswordHasher.cs",
-              "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Helpers\\PasswordHasher.cs",
-              "RelativeDocumentMoniker": "Backend\\Helpers\\PasswordHasher.cs",
-              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Helpers\\PasswordHasher.cs",
-              "RelativeToolTip": "Backend\\Helpers\\PasswordHasher.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-30T11:19:24.692Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Backend\\Services\\AuthService.cs",
               "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Services\\AuthService.cs",
               "RelativeToolTip": "Backend\\Services\\AuthService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-30T11:17:15.489Z",
+              "WhenOpened": "2026-07-31T10:35:42.056Z",
               "EditorCaption": ""
             }
           ]

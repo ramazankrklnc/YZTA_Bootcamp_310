@@ -23,13 +23,11 @@ namespace Backend.Controllers
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(
-            RegisterRequest request
+            [FromBody] RegisterRequest request
         )
         {
-
             try
             {
-
                 var result =
                     await _authService.RegisterAsync(
                         request
@@ -37,20 +35,14 @@ namespace Backend.Controllers
 
 
                 return Ok(result);
-
             }
             catch (Exception ex)
             {
-
-                return BadRequest(
-                    new
-                    {
-                        message = ex.Message
-                    }
-                );
-
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
             }
-
         }
 
 
@@ -59,13 +51,11 @@ namespace Backend.Controllers
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(
-            LoginRequest request
+            [FromBody] LoginRequest request
         )
         {
-
             try
             {
-
                 var result =
                     await _authService.LoginAsync(
                         request
@@ -73,21 +63,14 @@ namespace Backend.Controllers
 
 
                 return Ok(result);
-
             }
             catch (Exception ex)
             {
-
-                return BadRequest(
-                    new
-                    {
-                        message = ex.Message
-                    }
-                );
-
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
             }
-
         }
-
     }
 }
