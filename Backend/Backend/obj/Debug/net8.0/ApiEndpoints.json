@@ -64,6 +64,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Backend.Controllers.ContractController",
+    "Method": "Analyze",
+    "RelativePath": "api/Contract/analyze",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Backend.Models.Contract.ContractRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend.Controllers.PetitionController",
+    "Method": "Create",
+    "RelativePath": "api/Petition/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Backend.Models.Petition.PetitionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Backend.Controllers.SessionController",
     "Method": "DeleteSession",
     "RelativePath": "api/Session/{id}",
