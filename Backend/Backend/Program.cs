@@ -86,6 +86,10 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 
 builder.Services.AddScoped<ISessionService, SessionService>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+
+builder.Services.AddScoped<IMessageService, MessageService>();
+
 
 builder.Services.AddScoped<JwtHelper>();
 

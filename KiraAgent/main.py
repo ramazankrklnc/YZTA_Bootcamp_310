@@ -6,8 +6,6 @@ import uvicorn
 
 from langchain_core.messages import HumanMessage, AIMessage
 from graph import app as graph
-from contract_graph import contract_graph
-from petition_graph import petition_graph
 
 app = FastAPI(
     title="HakkımVar Kira Hukuku Agent API",
@@ -27,11 +25,6 @@ class SoruRequest(BaseModel):
 class ResetRequest(BaseModel):
     session_id: str
 
-class ContractRequest(BaseModel):
-    contract_text: str
-
-class PetitionRequest(BaseModel):
-    user_problem: str
 
 @app.get("/")
 async def root():
@@ -112,127 +105,6 @@ async def hafiza_temizle(data: ResetRequest):
         "durum": "yeni_sohbet"
     }
 
-
-@app.post("/contract/analyze")
-async def analyze_contract(
-    data: ContractRequest
-):
-    try:
-
-        initial_state = {
-
-            "contract_text": data.contract_text,
-
-            "summary": "",
-
-            "important_clauses": [],
-
-            "keywords": [],
-
-            "retrieved_documents": [],
-
-            "analysis": "",
-
-            "risk_score": 0,
-
-            "final_response": {}
-        }
-
-
-        result = await contract_graph.ainvoke(
-            initial_state
-        )
-
-
-        return {
-            "success": True,
-
-            "risk_score":
-            result.get(
-                "risk_score",
-                0
-            ),
-
-            "analysis":
-            result.get(
-                "final_response",
-                {}
-            )
-        }
-
-
-    except Exception as e:
-
-        import traceback
-
-        traceback.print_exc()
-
-
-        raise HTTPException(
-            status_code=500,
-            detail=str(e)
-        )
-
-@app.post("/petition")
-async def create_petition(
-    data: PetitionRequest
-):
-    try:
-
-        initial_state = {
-
-            "user_problem":
-            data.user_problem,
-
-            "petition_type":
-            "",
-
-            "retrieved_documents":
-            [],
-
-            "petition_text":
-            "",
-
-            "missing_fields":
-            []
-
-        }
-
-
-        result = await petition_graph.ainvoke(
-            initial_state
-        )
-
-
-        return {
-
-            "petition":
-            result.get(
-                "petition_text",
-                ""
-            ),
-
-
-            "missing_fields":
-            result.get(
-                "missing_fields",
-                []
-            )
-
-        }
-
-
-    except Exception as e:
-
-        import traceback
-
-        traceback.print_exc()
-
-
-        raise HTTPException(
-            status_code=500,
-            detail=str(e)
-        )
 
 if __name__ == "__main__":
     print("🚀 HakkımVar Agent API Başlatılıyor...")
