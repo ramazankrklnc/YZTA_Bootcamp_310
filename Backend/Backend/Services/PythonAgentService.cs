@@ -1,56 +1,183 @@
 ﻿using Backend.Interfaces;
+using Backend.Models.Contract;
+using Backend.Models.Petition;
 using Backend.Models.Python;
-using System.Text.Json;
 using System.Text;
+using System.Text.Json;
 
 namespace Backend.Services
 {
     public class PythonAgentService : IPythonAgentService
     {
+
         private readonly HttpClient _httpClient;
 
-        public PythonAgentService(HttpClient httpClient)
+
+        public PythonAgentService(
+            HttpClient httpClient
+        )
         {
             _httpClient = httpClient;
         }
 
+
+
         public async Task<PythonAgentResponse> AskQuestionAsync(
             string sessionId,
-            string question)
+            string question
+        )
         {
-            var request = new PythonAgentRequest
+
+            var body = new
             {
-                SessionId = sessionId,
-                UserQuestion = question
+                session_id = sessionId,
+                user_question = question
             };
 
-            var json = JsonSerializer.Serialize(request);
 
-            var content = new StringContent(
-                json,
-                Encoding.UTF8,
-                "application/json"
-            );
+            var json =
+                JsonSerializer.Serialize(body);
 
-            var response = await _httpClient.PostAsync(
-                "/sor",
-                content
-            );
+
+            var content =
+                new StringContent(
+                    json,
+                    Encoding.UTF8,
+                    "application/json"
+                );
+
+
+            var response =
+                await _httpClient.PostAsync(
+                    "/sor",
+                    content
+                );
+
 
             response.EnsureSuccessStatusCode();
 
-            var responseJson =
-                await response.Content.ReadAsStringAsync();
 
             var result =
-                JsonSerializer.Deserialize<PythonAgentResponse>(
-                    responseJson,
-                    new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                await response.Content.ReadAsStringAsync();
 
-            return result!;
+
+
+            return JsonSerializer.Deserialize<PythonAgentResponse>(
+                result,
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                }
+            )!;
+
         }
+
+
+
+
+
+        public async Task<PetitionResponse> CreatePetitionAsync(
+            string problem
+        )
+        {
+
+            var body = new
+            {
+                user_problem = problem
+            };
+
+
+            var json =
+                JsonSerializer.Serialize(body);
+
+
+
+            var content =
+                new StringContent(
+                    json,
+                    Encoding.UTF8,
+                    "application/json"
+                );
+
+
+
+            var response =
+                await _httpClient.PostAsync(
+                    "/petition",
+                    content
+                );
+
+
+
+            response.EnsureSuccessStatusCode();
+
+
+
+            var result =
+                await response.Content.ReadAsStringAsync();
+
+
+
+            return JsonSerializer.Deserialize<PetitionResponse>(
+                result,
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                }
+            )!;
+
+        }
+
+        public async Task<ContractResponse> AnalyzeContractAsync(
+    string contractText
+)
+        {
+
+            var body = new
+            {
+                contract_text = contractText
+            };
+
+
+            var json =
+                JsonSerializer.Serialize(body);
+
+
+
+            var content =
+                new StringContent(
+                    json,
+                    Encoding.UTF8,
+                    "application/json"
+                );
+
+
+
+            var response =
+                await _httpClient.PostAsync(
+                    "/contract/analyze",
+                    content
+                );
+
+
+            response.EnsureSuccessStatusCode();
+
+
+
+            var result =
+                await response.Content.ReadAsStringAsync();
+
+
+
+            return JsonSerializer.Deserialize<ContractResponse>(
+                result,
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                }
+            )!;
+
+        }
+
     }
 }
