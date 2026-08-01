@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mobil_arayuz/pages/contract_analysis_screen.dart'; // Yükleme ve risk analiz ekranı
 import 'package:mobil_arayuz/pages/home_screen.dart'; // Chat ekranı
 import 'package:mobil_arayuz/pages/petition_screen.dart'; // İhtarname & Dilekçe ekranı
+import 'package:mobil_arayuz/pages/profile_screen.dart'; // Profil ekranı
+import 'package:mobil_arayuz/pages/widgets/rights_detail_bottom_sheet.dart'; // Haklar Rehberi Modalı
 import 'package:mobil_arayuz/services/pdf_service.dart';
+import 'package:mobil_arayuz/utils/theme_manager.dart'; // Tema yönetimi eklendi
 
 class HomeDashboardScreen extends StatefulWidget {
   const HomeDashboardScreen({super.key});
@@ -12,9 +15,18 @@ class HomeDashboardScreen extends StatefulWidget {
 }
 
 class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
-  int _currentIndex = 0;
   final PdfService _pdfService = PdfService();
   bool _isLoadingAssetPdf = false;
+
+  // Haklar Rehberi Modalını Açan Yardımcı Metot
+  void _openRightsBottomSheet({int? initialIndex}) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => RightsDetailBottomSheet(initialIndex: initialIndex),
+    );
+  }
 
   // Proje assets klasöründen PDF'i okuyup Analiz Ekranına Aktaran Fonksiyon
   Future<void> _loadAssetPdfAndNavigate() async {
@@ -66,22 +78,31 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // 🌙 TEMA DURUMU VE DİNAMİK RENKLER
+    final isDark = ThemeManager.isDarkMode;
+    final cardBgColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+    final primaryTextColor = isDark ? Colors.white : Colors.grey.shade800;
+    final secondaryTextColor = isDark
+        ? Colors.grey.shade400
+        : Colors.grey.shade600;
+    final borderColor = isDark ? Colors.grey.shade800 : Colors.grey.shade200;
+
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
         title: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.blue.shade50,
+                color: isDark
+                    ? Colors.blue.shade900.withOpacity(0.4)
+                    : Colors.blue.shade50,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
                 Icons.gavel_rounded,
-                color: Colors.blue.shade900,
+                color: isDark ? Colors.blue.shade300 : Colors.blue.shade900,
                 size: 24,
               ),
             ),
@@ -89,7 +110,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
             Text(
               'HakkımVar',
               style: TextStyle(
-                color: Colors.blue.shade900,
+                color: isDark ? Colors.white : Colors.blue.shade900,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
@@ -100,9 +121,35 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
           IconButton(
             icon: Icon(
               Icons.notifications_none_rounded,
-              color: Colors.grey.shade800,
+              color: isDark ? Colors.grey.shade300 : Colors.grey.shade800,
             ),
             onPressed: () {},
+          ),
+          // SAĞ ÜST KULLANICI PROFİL İKONU
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(20),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfileScreen(),
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                radius: 18,
+                backgroundColor: isDark
+                    ? Colors.blue.shade700
+                    : Colors.blue.shade900,
+                child: const Icon(
+                  Icons.person_rounded,
+                  size: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -118,14 +165,18 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.blue.shade900, Colors.blue.shade700],
+                    colors: isDark
+                        ? [Colors.blue.shade900, Colors.indigo.shade900]
+                        : [Colors.blue.shade900, Colors.blue.shade700],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.blue.shade900.withOpacity(0.3),
+                      color: isDark
+                          ? Colors.black45
+                          : Colors.blue.shade900.withOpacity(0.3),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -193,7 +244,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey.shade800,
+                  color: primaryTextColor,
                 ),
               ),
               const SizedBox(height: 14),
@@ -208,6 +259,11 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                       subtitle: 'Cihazdan Seç',
                       icon: Icons.upload_file_rounded,
                       color: Colors.teal,
+                      cardBgColor: cardBgColor,
+                      primaryTextColor: primaryTextColor,
+                      secondaryTextColor: secondaryTextColor,
+                      borderColor: borderColor,
+                      isDark: isDark,
                       onTap: () {
                         Navigator.push(
                           context,
@@ -227,6 +283,11 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                       subtitle: 'Soru Sor & Analiz Al',
                       icon: Icons.chat_bubble_outline_rounded,
                       color: Colors.indigo,
+                      cardBgColor: cardBgColor,
+                      primaryTextColor: primaryTextColor,
+                      secondaryTextColor: secondaryTextColor,
+                      borderColor: borderColor,
+                      isDark: isDark,
                       onTap: () {
                         Navigator.push(
                           context,
@@ -252,8 +313,12 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                       subtitle: 'Taslak Oluştur',
                       icon: Icons.description_outlined,
                       color: Colors.amber,
+                      cardBgColor: cardBgColor,
+                      primaryTextColor: primaryTextColor,
+                      secondaryTextColor: secondaryTextColor,
+                      borderColor: borderColor,
+                      isDark: isDark,
                       onTap: () {
-                        // PetitionScreen Ekranına Yönlendirme
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -264,7 +329,6 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                     ),
                   ),
                   const SizedBox(width: 14),
-                  // Gelecekte eklenebilecek ek bir kart için boşluk kalıbı/esneklik
                   const Expanded(child: SizedBox()),
                 ],
               ),
@@ -280,14 +344,18 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade800,
+                      color: primaryTextColor,
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => _openRightsBottomSheet(),
                     child: Text(
                       'Tümünü Gör',
-                      style: TextStyle(color: Colors.blue.shade800),
+                      style: TextStyle(
+                        color: isDark
+                            ? Colors.blue.shade300
+                            : Colors.blue.shade800,
+                      ),
                     ),
                   ),
                 ],
@@ -298,64 +366,39 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                 title: 'Yasal Kira Artış Oranı',
                 subtitle: 'Kira artışları TÜFE 12 aylık ortalamasını geçemez.',
                 icon: Icons.trending_up_rounded,
+                cardBgColor: cardBgColor,
+                primaryTextColor: primaryTextColor,
+                secondaryTextColor: secondaryTextColor,
+                borderColor: borderColor,
+                isDark: isDark,
+                onTap: () => _openRightsBottomSheet(initialIndex: 0),
               ),
               _buildInfoTile(
                 title: 'Depozito İadesi Kuralları',
                 subtitle:
                     'Depozito en fazla 3 aylık kira bedeli kadar olabilir.',
                 icon: Icons.account_balance_wallet_outlined,
+                cardBgColor: cardBgColor,
+                primaryTextColor: primaryTextColor,
+                secondaryTextColor: secondaryTextColor,
+                borderColor: borderColor,
+                isDark: isDark,
+                onTap: () => _openRightsBottomSheet(initialIndex: 1),
               ),
               _buildInfoTile(
                 title: 'Tahliye Şartları',
                 subtitle: 'Ev sahibi haklı gerekçe olmadan kiracıyı çıkaramaz.',
                 icon: Icons.security_outlined,
+                cardBgColor: cardBgColor,
+                primaryTextColor: primaryTextColor,
+                secondaryTextColor: secondaryTextColor,
+                borderColor: borderColor,
+                isDark: isDark,
+                onTap: () => _openRightsBottomSheet(initialIndex: 2),
               ),
             ],
           ),
         ),
-      ),
-
-      // ALT GEÇİŞ MENÜSÜ (BOTTOM NAVIGATION)
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        selectedItemColor: Colors.blue.shade900,
-        unselectedItemColor: Colors.grey.shade500,
-        showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() => _currentIndex = index);
-          if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          } else if (index == 2) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ContractAnalysisScreen(),
-              ),
-            );
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled),
-            label: 'Ana Sayfa',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat_outlined),
-            label: 'HakkımVar AI',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.folder_open_rounded),
-            label: 'Analizlerim',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline_rounded),
-            label: 'Profil',
-          ),
-        ],
       ),
     );
   }
@@ -367,6 +410,11 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
     required String subtitle,
     required IconData icon,
     required MaterialColor color,
+    required Color cardBgColor,
+    required Color primaryTextColor,
+    required Color secondaryTextColor,
+    required Color borderColor,
+    required bool isDark,
     required VoidCallback onTap,
   }) {
     return InkWell(
@@ -375,12 +423,12 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: cardBgColor,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.grey.shade200),
+          border: Border.all(color: borderColor),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade100,
+              color: isDark ? Colors.black26 : Colors.grey.shade100,
               blurRadius: 6,
               offset: const Offset(0, 3),
             ),
@@ -392,24 +440,29 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: color.shade50,
+                color: isDark ? color.shade900.withOpacity(0.3) : color.shade50,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(icon, color: color.shade700, size: 26),
+              child: Icon(
+                icon,
+                color: isDark ? color.shade300 : color.shade700,
+                size: 26,
+              ),
             ),
             const SizedBox(height: 14),
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
                 height: 1.2,
+                color: primaryTextColor,
               ),
             ),
             const SizedBox(height: 4),
             Text(
               subtitle,
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+              style: TextStyle(fontSize: 12, color: secondaryTextColor),
             ),
           ],
         ),
@@ -422,40 +475,58 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
     required String title,
     required String subtitle,
     required IconData icon,
+    required Color cardBgColor,
+    required Color primaryTextColor,
+    required Color secondaryTextColor,
+    required Color borderColor,
+    required bool isDark,
+    required VoidCallback onTap,
   }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade200),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.blue.shade800, size: 24),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  subtitle,
-                  style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
-                ),
-              ],
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: cardBgColor,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: borderColor),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: isDark ? Colors.blue.shade300 : Colors.blue.shade800,
+              size: 24,
             ),
-          ),
-          Icon(Icons.chevron_right_rounded, color: Colors.grey.shade400),
-        ],
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: primaryTextColor,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: TextStyle(fontSize: 12, color: secondaryTextColor),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: isDark ? Colors.grey.shade600 : Colors.grey.shade400,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobil_arayuz/models/petition_response.dart';
 import 'package:mobil_arayuz/services/petition_service.dart';
+import 'package:mobil_arayuz/utils/theme_manager.dart'; // Tema yönetimi eklendi
 
 class PetitionScreen extends StatefulWidget {
   const PetitionScreen({super.key});
@@ -75,14 +76,20 @@ class _PetitionScreenState extends State<PetitionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // 🌙 TEMA DURUMU VE DİNAMİK RENKLER
+    final isDark = ThemeManager.isDarkMode;
+    final cardBgColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+    final primaryTextColor = isDark ? Colors.white : Colors.grey.shade900;
+    final secondaryTextColor = isDark
+        ? Colors.grey.shade400
+        : Colors.grey.shade600;
+    final borderColor = isDark ? Colors.grey.shade800 : Colors.grey.shade300;
+    final inputFillColor = isDark ? const Color(0xFF2C2C2C) : Colors.white;
+
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
         title: const Text('İhtarname & Dilekçe Oluştur'),
         centerTitle: true,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.blue.shade900,
-        elevation: 1,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -94,15 +101,21 @@ class _PetitionScreenState extends State<PetitionScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.teal.shade50,
+                  color: isDark
+                      ? Colors.teal.shade900.withOpacity(0.3)
+                      : Colors.teal.shade50,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.teal.shade200),
+                  border: Border.all(
+                    color: isDark ? Colors.teal.shade700 : Colors.teal.shade200,
+                  ),
                 ),
                 child: Row(
                   children: [
                     Icon(
                       Icons.description_outlined,
-                      color: Colors.teal.shade800,
+                      color: isDark
+                          ? Colors.teal.shade300
+                          : Colors.teal.shade800,
                       size: 32,
                     ),
                     const SizedBox(width: 14),
@@ -111,7 +124,9 @@ class _PetitionScreenState extends State<PetitionScreen> {
                         'Yaşadığınız durumu anlatın, Yapay Zekâ hukuki normlara uygun ihtarname veya dilekçe taslağınızı hazırlasın.',
                         style: TextStyle(
                           fontSize: 13,
-                          color: Colors.teal.shade900,
+                          color: isDark
+                              ? Colors.teal.shade200
+                              : Colors.teal.shade900,
                           height: 1.3,
                         ),
                       ),
@@ -128,29 +143,33 @@ class _PetitionScreenState extends State<PetitionScreen> {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey.shade800,
+                  color: primaryTextColor,
                 ),
               ),
               const SizedBox(height: 8),
               TextField(
                 controller: _problemController,
                 maxLines: 5,
+                style: TextStyle(color: primaryTextColor),
                 decoration: InputDecoration(
                   hintText:
                       'Örn: Ev sahibim sözleşme yenileme döneminde %120 zam talep etti ve kabul etmediğim takdirde evi boşaltmamı istiyor...',
-                  fillColor: Colors.white,
+                  hintStyle: TextStyle(color: secondaryTextColor),
+                  fillColor: inputFillColor,
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
+                    borderSide: BorderSide(color: borderColor),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(
-                      color: Colors.blue.shade800,
+                      color: isDark
+                          ? Colors.teal.shade400
+                          : Colors.blue.shade800,
                       width: 2,
                     ),
                   ),
@@ -163,7 +182,9 @@ class _PetitionScreenState extends State<PetitionScreen> {
               ElevatedButton.icon(
                 onPressed: _isLoading ? null : _generatePetition,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal.shade700,
+                  backgroundColor: isDark
+                      ? Colors.teal.shade600
+                      : Colors.teal.shade700,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -203,9 +224,15 @@ class _PetitionScreenState extends State<PetitionScreen> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.amber.shade50,
+                      color: isDark
+                          ? Colors.amber.shade900.withOpacity(0.3)
+                          : Colors.amber.shade50,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.amber.shade400),
+                      border: Border.all(
+                        color: isDark
+                            ? Colors.amber.shade700
+                            : Colors.amber.shade400,
+                      ),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,14 +241,18 @@ class _PetitionScreenState extends State<PetitionScreen> {
                           children: [
                             Icon(
                               Icons.warning_amber_rounded,
-                              color: Colors.amber.shade900,
+                              color: isDark
+                                  ? Colors.amber.shade300
+                                  : Colors.amber.shade900,
                             ),
                             const SizedBox(width: 8),
                             Text(
                               'Eksik Bilgiler Var',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.amber.shade900,
+                                color: isDark
+                                    ? Colors.amber.shade300
+                                    : Colors.amber.shade900,
                               ),
                             ),
                           ],
@@ -231,7 +262,9 @@ class _PetitionScreenState extends State<PetitionScreen> {
                           'Resmî makamlara sunmadan önce aşağıdaki alanları dilekçede doldurmayı unutmayın:',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.amber.shade900,
+                            color: isDark
+                                ? Colors.amber.shade200
+                                : Colors.amber.shade900,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -244,9 +277,16 @@ class _PetitionScreenState extends State<PetitionScreen> {
                             return Chip(
                               label: Text(
                                 field,
-                                style: const TextStyle(fontSize: 11),
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: isDark
+                                      ? Colors.amber.shade200
+                                      : Colors.amber.shade900,
+                                ),
                               ),
-                              backgroundColor: Colors.amber.shade100,
+                              backgroundColor: isDark
+                                  ? Colors.amber.shade900.withOpacity(0.5)
+                                  : Colors.amber.shade100,
                               side: BorderSide.none,
                             );
                           }).toList(),
@@ -261,14 +301,14 @@ class _PetitionScreenState extends State<PetitionScreen> {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: cardBgColor,
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.grey.shade300),
-                    boxShadow: const [
+                    border: Border.all(color: borderColor),
+                    boxShadow: [
                       BoxShadow(
-                        color: Colors.black12,
+                        color: isDark ? Colors.black26 : Colors.black12,
                         blurRadius: 4,
-                        offset: Offset(0, 2),
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
@@ -278,17 +318,20 @@ class _PetitionScreenState extends State<PetitionScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'Hazırlanan Dilekçe / İhtarname',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
+                              color: primaryTextColor,
                             ),
                           ),
                           IconButton(
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.copy_rounded,
-                              color: Colors.blue,
+                              color: isDark
+                                  ? Colors.blue.shade300
+                                  : Colors.blue,
                             ),
                             tooltip: 'Metni Kopyala',
                             onPressed: () =>
@@ -296,13 +339,13 @@ class _PetitionScreenState extends State<PetitionScreen> {
                           ),
                         ],
                       ),
-                      const Divider(),
+                      Divider(color: borderColor),
                       const SizedBox(height: 8),
                       SelectableText(
                         _petitionResponse!.petition,
                         style: TextStyle(
                           fontSize: 13,
-                          color: Colors.grey.shade900,
+                          color: primaryTextColor,
                           height: 1.5,
                           fontFamily: 'monospace',
                         ),

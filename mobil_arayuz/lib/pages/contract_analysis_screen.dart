@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mobil_arayuz/models/contract_response.dart';
 import 'package:mobil_arayuz/services/contract_service.dart';
 import 'package:mobil_arayuz/services/pdf_service.dart';
+import 'package:mobil_arayuz/utils/theme_manager.dart'; // Tema yönetimi eklendi
 import 'package:mobil_arayuz/utils/token_manager.dart';
 
 class ContractAnalysisScreen extends StatefulWidget {
-  // Dışarıdan (Dashboard'daki test butonundan vs.) aktarılan metin için parametre
   final String? initialText;
 
   const ContractAnalysisScreen({super.key, this.initialText});
@@ -26,13 +26,11 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
   @override
   void initState() {
     super.initState();
-    // Eğer dışarıdan hazır metin geldiyse değişkenimize aktarıyoruz
     if (widget.initialText != null && widget.initialText!.trim().isNotEmpty) {
       _extractedText = widget.initialText;
     }
   }
 
-  // 1. PDF Dosyası Seç ve Metni Oku
   Future<void> _pickPdf() async {
     setState(() {
       _isLoading = true;
@@ -58,11 +56,14 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
     }
   }
 
-  // 2. Metni C# Backend'ine Gönderip Analiz Et
   Future<void> _analyzeContract() async {
     if (_extractedText == null || _extractedText!.isEmpty) return;
 
     final token = TokenManager.token;
+    if (token == null) {
+      _showSnackBar("Oturum süresi dolmuş, lütfen tekrar giriş yapın.");
+      return;
+    }
 
     setState(() {
       _isLoading = true;
@@ -97,15 +98,17 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // 🌙 TEMA DURUMU VE RENKLERİ
+    final isDark = ThemeManager.isDarkMode;
+    final cardBgColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+    final primaryTextColor = isDark ? Colors.white : Colors.grey.shade900;
+    final secondaryTextColor = isDark
+        ? Colors.grey.shade400
+        : Colors.grey.shade600;
+    final borderColor = isDark ? Colors.grey.shade800 : Colors.blue.shade200;
+
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
-      appBar: AppBar(
-        title: const Text('Sözleşme Analizi'),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.blue.shade900,
-        elevation: 1,
-      ),
+      appBar: AppBar(title: const Text('Sözleşme Analizi'), centerTitle: true),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20.0),
@@ -119,19 +122,19 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: cardBgColor,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
                       color: _extractedText != null
                           ? Colors.green
-                          : Colors.blue.shade200,
+                          : borderColor,
                       width: 2,
                     ),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: Colors.black12,
+                        color: isDark ? Colors.black38 : Colors.black12,
                         blurRadius: 4,
-                        offset: Offset(0, 2),
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
@@ -144,7 +147,9 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
                         size: 56,
                         color: _extractedText != null
                             ? Colors.green
-                            : Colors.blue.shade700,
+                            : (isDark
+                                  ? Colors.blue.shade300
+                                  : Colors.blue.shade700),
                       ),
                       const SizedBox(height: 12),
                       Text(
@@ -155,8 +160,8 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: _extractedText != null
-                              ? Colors.green.shade800
-                              : Colors.blue.shade900,
+                              ? Colors.green.shade400
+                              : primaryTextColor,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -166,7 +171,7 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
                             : 'Cihazınızdan PDF formatında dosya yükleyin',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.grey.shade600,
+                          color: secondaryTextColor,
                         ),
                       ),
                     ],
@@ -181,7 +186,9 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
                 ElevatedButton.icon(
                   onPressed: _isLoading ? null : _analyzeContract,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue.shade800,
+                    backgroundColor: isDark
+                        ? Colors.blue.shade700
+                        : Colors.blue.shade800,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -207,12 +214,16 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
                 Center(
                   child: Column(
                     children: [
-                      CircularProgressIndicator(color: Colors.blue.shade800),
+                      CircularProgressIndicator(
+                        color: isDark
+                            ? Colors.blue.shade300
+                            : Colors.blue.shade800,
+                      ),
                       const SizedBox(height: 16),
                       Text(
                         _loadingMessage,
                         style: TextStyle(
-                          color: Colors.grey.shade700,
+                          color: secondaryTextColor,
                           fontSize: 14,
                         ),
                       ),
@@ -224,18 +235,21 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
               // 2. ANALİZ SONUÇLARI PANELİ
               if (_analysisResult != null) ...[
                 const SizedBox(height: 24),
-                _buildRiskScoreCard(_analysisResult!.riskScore),
+                _buildRiskScoreCard(_analysisResult!.riskScore, isDark),
                 const SizedBox(height: 20),
 
                 // ÖZET KARTI
                 _buildSectionCard(
                   title: 'Sözleşme Özeti',
                   icon: Icons.subject_rounded,
+                  cardBgColor: cardBgColor,
+                  primaryTextColor: primaryTextColor,
+                  borderColor: borderColor,
                   child: Text(
                     _analysisResult!.summary,
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.grey.shade800,
+                      color: secondaryTextColor,
                       height: 1.4,
                     ),
                   ),
@@ -246,7 +260,10 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
                 _buildSectionCard(
                   title: 'Riskli Maddeler (${_analysisResult!.risks.length})',
                   icon: Icons.warning_amber_rounded,
-                  iconColor: Colors.orange.shade800,
+                  iconColor: Colors.orange.shade700,
+                  cardBgColor: cardBgColor,
+                  primaryTextColor: primaryTextColor,
+                  borderColor: borderColor,
                   child: Column(
                     children: _analysisResult!.risks.map((risk) {
                       return Padding(
@@ -257,7 +274,7 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
                             Icon(
                               Icons.error_outline,
                               size: 18,
-                              color: Colors.red.shade700,
+                              color: Colors.red.shade400,
                             ),
                             const SizedBox(width: 8),
                             Expanded(
@@ -265,15 +282,15 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
                                 text: TextSpan(
                                   text: '${risk.type}: ',
                                   style: TextStyle(
-                                    color: Colors.red.shade900,
+                                    color: Colors.red.shade300,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 13,
                                   ),
                                   children: [
                                     TextSpan(
                                       text: risk.description,
-                                      style: const TextStyle(
-                                        color: Colors.black87,
+                                      style: TextStyle(
+                                        color: secondaryTextColor,
                                         fontWeight: FontWeight.normal,
                                       ),
                                     ),
@@ -293,7 +310,10 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
                 _buildSectionCard(
                   title: 'Hukuki Tavsiyeler',
                   icon: Icons.lightbulb_outline_rounded,
-                  iconColor: Colors.green.shade800,
+                  iconColor: Colors.green.shade600,
+                  cardBgColor: cardBgColor,
+                  primaryTextColor: primaryTextColor,
+                  borderColor: borderColor,
                   child: Column(
                     children: _analysisResult!.recommendations.map((rec) {
                       return Padding(
@@ -304,15 +324,15 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
                             Icon(
                               Icons.check_circle_outline,
                               size: 18,
-                              color: Colors.green.shade700,
+                              color: Colors.green.shade400,
                             ),
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
                                 rec,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 13,
-                                  color: Colors.black87,
+                                  color: secondaryTextColor,
                                 ),
                               ),
                             ),
@@ -331,7 +351,7 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
   }
 
   // Risk Skoru Gösterge Kartı
-  Widget _buildRiskScoreCard(int score) {
+  Widget _buildRiskScoreCard(int score, bool isDark) {
     Color scoreColor = Colors.green;
     String riskLevel = "Düşük Riskli";
 
@@ -346,7 +366,7 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: scoreColor.withOpacity(0.1),
+        color: scoreColor.withOpacity(isDark ? 0.2 : 0.1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: scoreColor.withOpacity(0.4)),
       ),
@@ -358,7 +378,10 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
             children: [
               Text(
                 'Genel Risk Derecesi',
-                style: TextStyle(color: Colors.grey.shade700, fontSize: 13),
+                style: TextStyle(
+                  color: isDark ? Colors.grey.shade400 : Colors.grey.shade700,
+                  fontSize: 13,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
@@ -396,32 +419,43 @@ class _ContractAnalysisScreenState extends State<ContractAnalysisScreen> {
     required String title,
     required IconData icon,
     required Widget child,
+    required Color cardBgColor,
+    required Color primaryTextColor,
+    required Color borderColor,
     Color? iconColor,
   }) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardBgColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: borderColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(icon, color: iconColor ?? Colors.blue.shade900),
+              Icon(
+                icon,
+                color:
+                    iconColor ??
+                    (ThemeManager.isDarkMode
+                        ? Colors.blue.shade300
+                        : Colors.blue.shade900),
+              ),
               const SizedBox(width: 8),
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  color: primaryTextColor,
                 ),
               ),
             ],
           ),
-          const Divider(height: 20),
+          Divider(height: 20, color: borderColor),
           child,
         ],
       ),

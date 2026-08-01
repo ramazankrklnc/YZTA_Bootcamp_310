@@ -3,6 +3,7 @@ import 'package:mobil_arayuz/models/chat_session.dart';
 import 'package:mobil_arayuz/models/message.dart';
 import 'package:mobil_arayuz/services/chat_service.dart';
 import 'package:mobil_arayuz/services/session_service.dart';
+import 'package:mobil_arayuz/utils/theme_manager.dart'; // Tema yönetimi eklendi
 import 'package:mobil_arayuz/utils/token_manager.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -55,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         });
 
-        // Aktif oturum varsa geçmiş mesajları otomatik getir
         if (_activeSessionId != null) {
           _fetchMessages(_activeSessionId!);
         }
@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
         });
 
         if (closeDrawer && Navigator.canPop(context)) {
-          Navigator.pop(context); // Drawer açık ise kapat
+          Navigator.pop(context);
         }
         return newSession.id;
       }
@@ -141,7 +141,6 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
 
-    // Aktif bir oturum yoksa arka planda otomatik yeni oturum oluştur
     int? currentSessionId = _activeSessionId;
     if (currentSessionId == null) {
       setState(() => _isSendingMessage = true);
@@ -152,7 +151,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
-    // Kullanıcı mesajını anında ekrana ekle
     final userMessage = Message(
       id: DateTime.now().millisecondsSinceEpoch,
       sessionId: currentSessionId,
@@ -176,7 +174,6 @@ class _HomeScreenState extends State<HomeScreen> {
         token: token,
       );
 
-      // Yapay Zekâ cevabını ekrana ekle
       final aiMessage = Message(
         id: DateTime.now().millisecondsSinceEpoch + 1,
         sessionId: currentSessionId,
@@ -220,14 +217,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // 🌙 TEMA DURUMU VE DİNAMİK RENKLER
+    final isDark = ThemeManager.isDarkMode;
+    final cardBgColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+    final primaryTextColor = isDark ? Colors.white : Colors.grey.shade900;
+    final secondaryTextColor = isDark
+        ? Colors.grey.shade400
+        : Colors.grey.shade600;
+    final inputFillColor = isDark
+        ? const Color(0xFF2C2C2C)
+        : Colors.grey.shade100;
+
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
         title: const Text('HakkımVar AI'),
         centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 1,
-        foregroundColor: Colors.blue.shade900,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
           tooltip: 'Ana Sayfaya Dön',
@@ -251,10 +255,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // SOL MENÜ (Geçmiş Sohbetler Drawer)
       drawer: Drawer(
+        backgroundColor: isDark ? const Color(0xFF181818) : Colors.white,
         child: Column(
           children: [
             UserAccountsDrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue.shade900),
+              decoration: BoxDecoration(
+                color: isDark
+                    ? Colors.blue.shade900.withOpacity(0.8)
+                    : Colors.blue.shade900,
+              ),
               accountName: const Text('HakkımVar Kullanıcısı'),
               accountEmail: const Text('Kira & Hukuk Danışmanlığı'),
               currentAccountPicture: const CircleAvatar(
@@ -263,22 +272,33 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.add_circle_outline, color: Colors.blue),
-              title: const Text(
+              leading: Icon(
+                Icons.add_circle_outline,
+                color: isDark ? Colors.blue.shade300 : Colors.blue,
+              ),
+              title: Text(
                 'Yeni Analiz / Sohbet',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: primaryTextColor,
+                ),
               ),
               onTap: () => _createNewSession(closeDrawer: true),
             ),
-            const Divider(),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            Divider(
+              color: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
+              ),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Geçmiş Analizler',
                   style: TextStyle(
-                    color: Colors.grey,
+                    color: secondaryTextColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -286,7 +306,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Expanded(
               child: _isLoadingSessions
-                  ? const Center(child: CircularProgressIndicator())
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: isDark
+                            ? Colors.blue.shade300
+                            : Colors.blue.shade900,
+                      ),
+                    )
                   : ListView.builder(
                       itemCount: _sessions.length,
                       itemBuilder: (context, index) {
@@ -295,12 +321,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         return ListTile(
                           selected: isSelected,
-                          selectedTileColor: Colors.blue.shade50,
+                          selectedTileColor: isDark
+                              ? Colors.blue.shade900.withOpacity(0.3)
+                              : Colors.blue.shade50,
                           leading: Icon(
                             Icons.chat_bubble_outline,
                             color: isSelected
-                                ? Colors.blue.shade900
-                                : Colors.grey,
+                                ? (isDark
+                                      ? Colors.blue.shade300
+                                      : Colors.blue.shade900)
+                                : secondaryTextColor,
                           ),
                           title: Text(
                             session.title.isEmpty
@@ -312,6 +342,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: isSelected
                                   ? FontWeight.bold
                                   : FontWeight.normal,
+                              color: isSelected
+                                  ? (isDark
+                                        ? Colors.blue.shade300
+                                        : Colors.blue.shade900)
+                                  : primaryTextColor,
                             ),
                           ),
                           onTap: () {
@@ -339,13 +374,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icon(
                             Icons.balance,
                             size: 64,
-                            color: Colors.blue.shade200,
+                            color: isDark
+                                ? Colors.blue.shade400.withOpacity(0.5)
+                                : Colors.blue.shade200,
                           ),
                           const SizedBox(height: 16),
                           Text(
                             'Kira Sözleşmenizle ilgili bir soru sorun',
                             style: TextStyle(
-                              color: Colors.grey.shade600,
+                              color: secondaryTextColor,
                               fontSize: 16,
                             ),
                           ),
@@ -353,7 +390,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             'Örn: "Ev sahibi kirayı %50 artırabilir mi?"',
                             style: TextStyle(
-                              color: Colors.grey.shade400,
+                              color: isDark
+                                  ? Colors.grey.shade600
+                                  : Colors.grey.shade400,
                               fontSize: 13,
                             ),
                           ),
@@ -366,7 +405,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: _messages.length,
                       itemBuilder: (context, index) {
                         final msg = _messages[index];
-                        return _buildMessageBubble(msg);
+                        return _buildMessageBubble(
+                          msg,
+                          isDark,
+                          cardBgColor,
+                          primaryTextColor,
+                        );
                       },
                     ),
             ),
@@ -379,18 +423,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Row(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 16,
                       height: 16,
-                      child: CircularProgressIndicator(strokeWidth: 2),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: isDark
+                            ? Colors.blue.shade300
+                            : Colors.blue.shade800,
+                      ),
                     ),
                     const SizedBox(width: 12),
                     Text(
                       'HakkımVar AI cevabı hazırlıyor...',
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontSize: 13,
-                      ),
+                      style: TextStyle(color: secondaryTextColor, fontSize: 13),
                     ),
                   ],
                 ),
@@ -399,13 +445,13 @@ class _HomeScreenState extends State<HomeScreen> {
             // MESAJ YAZMA ALANI
             Container(
               padding: const EdgeInsets.all(12),
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: cardBgColor,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black12,
+                    color: isDark ? Colors.black38 : Colors.black12,
                     blurRadius: 4,
-                    offset: Offset(0, -2),
+                    offset: const Offset(0, -2),
                   ),
                 ],
               ),
@@ -414,13 +460,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: TextField(
                       controller: _messageController,
+                      style: TextStyle(color: primaryTextColor),
                       decoration: InputDecoration(
                         hintText: 'Hukuki sorunuzu yazın...',
+                        hintStyle: TextStyle(color: secondaryTextColor),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
                           borderSide: BorderSide.none,
                         ),
-                        fillColor: Colors.grey.shade100,
+                        fillColor: inputFillColor,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 20,
@@ -433,7 +481,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(width: 8),
                   CircleAvatar(
-                    backgroundColor: Colors.blue.shade800,
+                    backgroundColor: isDark
+                        ? Colors.blue.shade700
+                        : Colors.blue.shade800,
                     child: IconButton(
                       icon: const Icon(
                         Icons.send_rounded,
@@ -453,8 +503,20 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Mesaj Balonu Widget'ı
-  Widget _buildMessageBubble(Message msg) {
+  Widget _buildMessageBubble(
+    Message msg,
+    bool isDark,
+    Color cardBgColor,
+    Color primaryTextColor,
+  ) {
     final isUser = msg.isUser;
+
+    // Kullanıcı mesajı için mavi, AI mesajı için açık/koyu mod arka planı
+    final bubbleColor = isUser
+        ? (isDark ? Colors.blue.shade900 : Colors.blue.shade800)
+        : cardBgColor;
+
+    final textColor = isUser ? Colors.white : primaryTextColor;
 
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
@@ -465,7 +527,7 @@ class _HomeScreenState extends State<HomeScreen> {
           maxWidth: MediaQuery.of(context).size.width * 0.78,
         ),
         decoration: BoxDecoration(
-          color: isUser ? Colors.blue.shade800 : Colors.white,
+          color: bubbleColor,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
             topRight: const Radius.circular(16),
@@ -474,20 +536,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           boxShadow: [
             if (!isUser)
-              const BoxShadow(
-                color: Colors.black12,
+              BoxShadow(
+                color: isDark ? Colors.black26 : Colors.black12,
                 blurRadius: 4,
-                offset: Offset(0, 2),
+                offset: const Offset(0, 2),
               ),
           ],
         ),
         child: Text(
           msg.content,
-          style: TextStyle(
-            color: isUser ? Colors.white : Colors.black87,
-            fontSize: 14,
-            height: 1.4,
-          ),
+          style: TextStyle(color: textColor, fontSize: 14, height: 1.4),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobil_arayuz/LoginPages/terms_bottom_sheet.dart';
 import 'package:mobil_arayuz/services/auth_service.dart';
+import 'package:mobil_arayuz/utils/theme_manager.dart'; // Tema yönetimi eklendi
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -58,7 +59,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
         if (!mounted) return;
 
-        // Başarılı kayıt bildirimi gösterip Giriş Yap ekranına döndürüyoruz
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Kayıt başarıyla tamamlandı! Giriş yapabilirsiniz.'),
@@ -89,13 +89,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // 🌙 TEMA DURUMU VE DİNAMİK RENKLER
+    final isDark = ThemeManager.isDarkMode;
+    final primaryTextColor = isDark ? Colors.white : Colors.grey.shade900;
+    final secondaryTextColor = isDark
+        ? Colors.grey.shade400
+        : Colors.grey.shade600;
+    final borderColor = isDark ? Colors.grey.shade800 : Colors.grey.shade300;
+    final inputFillColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new, color: Colors.blue.shade900),
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: isDark ? Colors.blue.shade300 : Colors.blue.shade900,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -113,24 +124,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue.shade900,
+                    color: isDark ? Colors.blue.shade300 : Colors.blue.shade900,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Hukuki süreçlerinizi kolayca yönetmek için HakkımVar\'a katılın.',
-                  style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                  style: TextStyle(fontSize: 14, color: secondaryTextColor),
                 ),
                 const SizedBox(height: 32),
 
                 // 2. AD SOYAD ALANI
-                _buildLabel('Ad Soyad'),
+                _buildLabel('Ad Soyad', primaryTextColor),
                 TextFormField(
                   controller: _nameController,
                   textCapitalization: TextCapitalization.words,
+                  style: TextStyle(color: primaryTextColor),
                   decoration: _buildInputDecoration(
                     hintText: 'Örn: İzzettin Mert Özyağlı',
                     icon: Icons.person_outline,
+                    isDark: isDark,
+                    inputFillColor: inputFillColor,
+                    borderColor: borderColor,
+                    secondaryTextColor: secondaryTextColor,
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
@@ -142,13 +158,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 20),
 
                 // 3. E-POSTA ALANI
-                _buildLabel('E-posta Adresi'),
+                _buildLabel('E-posta Adresi', primaryTextColor),
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(color: primaryTextColor),
                   decoration: _buildInputDecoration(
                     hintText: 'ornek@email.com',
                     icon: Icons.email_outlined,
+                    isDark: isDark,
+                    inputFillColor: inputFillColor,
+                    borderColor: borderColor,
+                    secondaryTextColor: secondaryTextColor,
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
@@ -163,18 +184,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 20),
 
                 // 4. ŞİFRE ALANI
-                _buildLabel('Şifre'),
+                _buildLabel('Şifre', primaryTextColor),
                 TextFormField(
                   controller: _passwordController,
                   obscureText: !_isPasswordVisible,
+                  style: TextStyle(color: primaryTextColor),
                   decoration: _buildInputDecoration(
                     hintText: '••••••••',
                     icon: Icons.lock_outline,
+                    isDark: isDark,
+                    inputFillColor: inputFillColor,
+                    borderColor: borderColor,
+                    secondaryTextColor: secondaryTextColor,
                     suffixIcon: IconButton(
                       icon: Icon(
                         _isPasswordVisible
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
+                        color: secondaryTextColor,
                       ),
                       onPressed: () {
                         setState(() {
@@ -196,18 +223,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 20),
 
                 // 5. ŞİFRE TEKRAR ALANI
-                _buildLabel('Şifre Tekrar'),
+                _buildLabel('Şifre Tekrar', primaryTextColor),
                 TextFormField(
                   controller: _confirmPasswordController,
                   obscureText: !_isConfirmPasswordVisible,
+                  style: TextStyle(color: primaryTextColor),
                   decoration: _buildInputDecoration(
                     hintText: '••••••••',
                     icon: Icons.lock_reset_outlined,
+                    isDark: isDark,
+                    inputFillColor: inputFillColor,
+                    borderColor: borderColor,
+                    secondaryTextColor: secondaryTextColor,
                     suffixIcon: IconButton(
                       icon: Icon(
                         _isConfirmPasswordVisible
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
+                        color: secondaryTextColor,
                       ),
                       onPressed: () {
                         setState(() {
@@ -238,7 +271,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 24,
                       child: Checkbox(
                         value: _acceptedTerms,
-                        activeColor: Colors.blue.shade800,
+                        activeColor: isDark
+                            ? Colors.blue.shade600
+                            : Colors.blue.shade800,
+                        checkColor: Colors.white,
+                        side: BorderSide(color: borderColor),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
                         ),
@@ -270,14 +307,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           TextSpan(
                             text: 'Kayıt olarak ',
                             style: TextStyle(
-                              color: Colors.grey.shade700,
+                              color: secondaryTextColor,
                               fontSize: 13,
                             ),
                             children: [
                               TextSpan(
                                 text: 'Kullanıcı Sözleşmesini',
                                 style: TextStyle(
-                                  color: Colors.blue.shade800,
+                                  color: isDark
+                                      ? Colors.blue.shade300
+                                      : Colors.blue.shade800,
                                   fontWeight: FontWeight.bold,
                                   decoration: TextDecoration.underline,
                                 ),
@@ -286,7 +325,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               TextSpan(
                                 text: 'Aydınlatma Metnini',
                                 style: TextStyle(
-                                  color: Colors.blue.shade800,
+                                  color: isDark
+                                      ? Colors.blue.shade300
+                                      : Colors.blue.shade800,
                                   fontWeight: FontWeight.bold,
                                   decoration: TextDecoration.underline,
                                 ),
@@ -308,7 +349,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ElevatedButton(
                   onPressed: _isLoading ? null : _onRegisterPressed,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue.shade800,
+                    backgroundColor: isDark
+                        ? Colors.blue.shade700
+                        : Colors.blue.shade800,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -341,10 +384,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: [
                     Text(
                       'Zaten bir hesabınız var mı?',
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(color: secondaryTextColor, fontSize: 14),
                     ),
                     TextButton(
                       onPressed: () => Navigator.pop(context),
@@ -353,7 +393,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue.shade800,
+                          color: isDark
+                              ? Colors.blue.shade300
+                              : Colors.blue.shade800,
                         ),
                       ),
                     ),
@@ -368,7 +410,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _buildLabel(String text) {
+  Widget _buildLabel(String text, Color textColor) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Text(
@@ -376,7 +418,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: Colors.grey.shade800,
+          color: textColor,
         ),
       ),
     );
@@ -385,21 +427,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
   InputDecoration _buildInputDecoration({
     required String hintText,
     required IconData icon,
+    required bool isDark,
+    required Color inputFillColor,
+    required Color borderColor,
+    required Color secondaryTextColor,
     Widget? suffixIcon,
   }) {
     return InputDecoration(
       hintText: hintText,
-      prefixIcon: Icon(icon),
+      hintStyle: TextStyle(color: secondaryTextColor),
+      prefixIcon: Icon(
+        icon,
+        color: isDark ? Colors.blue.shade300 : Colors.grey.shade600,
+      ),
       suffixIcon: suffixIcon,
+      fillColor: inputFillColor,
+      filled: true,
       contentPadding: const EdgeInsets.symmetric(vertical: 16),
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Colors.grey.shade300),
+        borderSide: BorderSide(color: borderColor),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Colors.blue.shade700, width: 2),
+        borderSide: BorderSide(
+          color: isDark ? Colors.blue.shade400 : Colors.blue.shade700,
+          width: 2,
+        ),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
