@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  // 1. Kullanıcının Geçmiş Oturumlarını Getirme
+  // 1. Kullanıcının Geçmiş Oturumlarını Getirme ve İlk Oturumun Mesajlarını Yükleme
   Future<void> _fetchSessions() async {
     final token = TokenManager.token;
     if (token == null) return;
@@ -54,6 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
             _activeSessionId = _sessions.first.id;
           }
         });
+
+        // Aktif oturum varsa geçmiş mesajları otomatik getir
+        if (_activeSessionId != null) {
+          _fetchMessages(_activeSessionId!);
+        }
       }
     } catch (e) {
       _showSnackBar('Oturumlar yüklenirken hata oluştu: ${e.toString()}');
@@ -64,7 +69,38 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  // 2. Yeni Oturum (Sohbet) Oluşturma
+  // 2. Seçilen Oturuma Ait Geçmiş Mesajları Getirme
+  Future<void> _fetchMessages(int sessionId) async {
+    final token = TokenManager.token;
+    if (token == null) return;
+
+    setState(() {
+      _activeSessionId = sessionId;
+      _messages.clear();
+      _isSendingMessage = true;
+    });
+
+    try {
+      final messages = await _chatService.getMessages(
+        sessionId: sessionId,
+        token: token,
+      );
+
+      setState(() {
+        _messages = messages;
+      });
+
+      _scrollToBottom();
+    } catch (e) {
+      _showSnackBar('Mesajlar yüklenemedi: ${e.toString()}');
+    } finally {
+      if (mounted) {
+        setState(() => _isSendingMessage = false);
+      }
+    }
+  }
+
+  // 3. Yeni Oturum (Sohbet) Oluşturma
   Future<int?> _createNewSession({bool closeDrawer = true}) async {
     final token = TokenManager.token;
     if (token == null) {
@@ -93,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return null;
   }
 
-  // 3. Yapay Zekâya Soru Sorma (Chat)
+  // 4. Yapay Zekâya Soru Sorma (Chat)
   Future<void> _sendMessage() async {
     final question = _messageController.text.trim();
     final token = TokenManager.token;
@@ -105,20 +141,21 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
 
-    // Eğer aktif bir oturum yoksa arka planda otomatik yeni oturum oluştur
+    // Aktif bir oturum yoksa arka planda otomatik yeni oturum oluştur
     int? currentSessionId = _activeSessionId;
     if (currentSessionId == null) {
       setState(() => _isSendingMessage = true);
       currentSessionId = await _createNewSession(closeDrawer: false);
       if (currentSessionId == null) {
         setState(() => _isSendingMessage = false);
-        return; // Oturum oluşturulamazsa işlemi durdur
+        return;
       }
     }
 
-    // Kullanıcı mesajını ekrana anında ekle
+    // Kullanıcı mesajını anında ekrana ekle
     final userMessage = Message(
       id: DateTime.now().millisecondsSinceEpoch,
+      sessionId: currentSessionId,
       isUser: true,
       content: question,
       createdAt: DateTime.now(),
@@ -142,6 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // Yapay Zekâ cevabını ekrana ekle
       final aiMessage = Message(
         id: DateTime.now().millisecondsSinceEpoch + 1,
+        sessionId: currentSessionId,
         isUser: false,
         content: chatResponse.answer,
         createdAt: DateTime.now(),
@@ -190,11 +228,23 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         elevation: 1,
         foregroundColor: Colors.blue.shade900,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+          tooltip: 'Ana Sayfaya Dön',
+          onPressed: () => Navigator.pop(context),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.add_comment_outlined),
             tooltip: 'Yeni Sohbet',
             onPressed: () => _createNewSession(closeDrawer: false),
+          ),
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.history_rounded),
+              tooltip: 'Geçmiş Sohbetler',
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
           ),
         ],
       ),
@@ -204,6 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             UserAccountsDrawerHeader(
+              decoration: BoxDecoration(color: Colors.blue.shade900),
               accountName: const Text('HakkımVar Kullanıcısı'),
               accountEmail: const Text('Kira & Hukuk Danışmanlığı'),
               currentAccountPicture: const CircleAvatar(
@@ -264,10 +315,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           onTap: () {
-                            setState(() {
-                              _activeSessionId = session.id;
-                              _messages.clear();
-                            });
+                            _fetchMessages(session.id);
                             Navigator.pop(context);
                           },
                         );

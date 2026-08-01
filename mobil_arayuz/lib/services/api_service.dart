@@ -8,6 +8,9 @@ class ApiService {
         Uri.parse(url),
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json",
+          // NGOK UYARI SAYFASINI ATLAMAK İÇİN KRİTİK HEADER:
+          "ngrok-skip-browser-warning": "true",
           if (token != null) "Authorization": "Bearer $token",
         },
       );
@@ -24,6 +27,9 @@ class ApiService {
         Uri.parse(url),
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json",
+          // NGOK UYARI SAYFASINI ATLAMAK İÇİN KRİTİK HEADER:
+          "ngrok-skip-browser-warning": "true",
           if (token != null) "Authorization": "Bearer $token",
         },
         body: jsonEncode(body),
@@ -36,14 +42,33 @@ class ApiService {
   }
 
   dynamic _handleResponse(http.Response response) {
-    final body = jsonDecode(response.body);
+    // Yanıt gövdesi boş gelirse çökmesini engelle
+    if (response.body.trim().isEmpty) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return [];
+      } else {
+        throw Exception(
+          "Sunucudan boş yanıt döndü. HTTP Kodu: ${response.statusCode}",
+        );
+      }
+    }
+
+    dynamic body;
+    try {
+      body = jsonDecode(response.body);
+    } catch (e) {
+      print("❌ Dönen Raw Yanıt Metni: ${response.body}");
+      throw Exception(
+        "JSON Parse Hatası (HTTP ${response.statusCode}): ${response.body}",
+      );
+    }
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return body;
     } else {
-      // C# Web API'den dönen BadRequest("Mesaj") veya problem details içindeki mesajı alma
-      final errorMessage =
-          body["message"] ?? body["title"] ?? "Bilinmeyen bir hata oluştu.";
+      final errorMessage = (body is Map)
+          ? (body["message"] ?? body["title"] ?? "Bilinmeyen hata")
+          : "Hata oluştu. Durum Kodu: ${response.statusCode}";
       throw Exception(errorMessage);
     }
   }

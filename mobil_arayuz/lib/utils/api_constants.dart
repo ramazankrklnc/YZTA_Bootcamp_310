@@ -10,4 +10,8 @@ class ApiConstants {
   static const String getSessions = "$baseUrl/api/Session/list";
 
   static const String askQuestion = "$baseUrl/api/Chat/ask";
+
+  // Yeni Eklenen Endpoint'ler:
+  static const String analyzeContract = "$baseUrl/api/Contract/analyze";
+  static const String createPetition = "$baseUrl/api/Petition/create";
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mobil_arayuz/pages/home_screen.dart'; // Mevcut Chat ekranın
+import 'package:mobil_arayuz/pages/contract_analysis_screen.dart'; // Yükleme ve risk analiz ekranı
+import 'package:mobil_arayuz/pages/home_screen.dart'; // Chat ekranı
+import 'package:mobil_arayuz/pages/petition_screen.dart'; // İhtarname & Dilekçe ekranı
+import 'package:mobil_arayuz/services/pdf_service.dart';
 
 class HomeDashboardScreen extends StatefulWidget {
   const HomeDashboardScreen({super.key});
@@ -10,6 +13,56 @@ class HomeDashboardScreen extends StatefulWidget {
 
 class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
   int _currentIndex = 0;
+  final PdfService _pdfService = PdfService();
+  bool _isLoadingAssetPdf = false;
+
+  // Proje assets klasöründen PDF'i okuyup Analiz Ekranına Aktaran Fonksiyon
+  Future<void> _loadAssetPdfAndNavigate() async {
+    setState(() {
+      _isLoadingAssetPdf = true;
+    });
+
+    try {
+      final extractedText = await _pdfService.readPdfFromAssets(
+        'assets/ornek_kira_sozlesmesi.pdf',
+      );
+
+      if (!mounted) return;
+
+      if (extractedText != null && extractedText.trim().isNotEmpty) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ContractAnalysisScreen(initialText: extractedText),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Asset PDF metni okunamadı veya dosya boş!'),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Hata oluştu: ${e.toString()}'),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoadingAssetPdf = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +112,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. KARŞILAMA BANNER'I
+              // 1. KARŞILAMA BANNER'I & ÖRNEK PDF TEST BUTONU
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
@@ -82,12 +135,12 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Hoş Geldiniz 👋',
+                      'Hızlı Test 🚀',
                       style: TextStyle(color: Colors.white70, fontSize: 14),
                     ),
                     const SizedBox(height: 6),
                     const Text(
-                      'Kira Sözleşmenizi Analiz Edin, Haklarınızı Koruyun',
+                      'Örnek Kira Sözleşmesi İle Analizi Başlat',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -97,9 +150,9 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton.icon(
-                      onPressed: () {
-                        // Sözleşme Yükleme Sayfasına Yönlendirme
-                      },
+                      onPressed: _isLoadingAssetPdf
+                          ? null
+                          : _loadAssetPdfAndNavigate,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         foregroundColor: Colors.blue.shade900,
@@ -111,10 +164,21 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                           vertical: 12,
                         ),
                       ),
-                      icon: const Icon(Icons.upload_file_rounded, size: 18),
-                      label: const Text(
-                        'Sözleşme Yükle',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      icon: _isLoadingAssetPdf
+                          ? SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.blue.shade900,
+                              ),
+                            )
+                          : const Icon(Icons.picture_as_pdf_rounded, size: 18),
+                      label: Text(
+                        _isLoadingAssetPdf
+                            ? 'PDF Okunuyor...'
+                            : 'Örnek PDF\'i Aktar ve Analiz Et',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -134,21 +198,22 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
               ),
               const SizedBox(height: 14),
 
+              // Hızlı İşlemler Grubu 1
               Row(
                 children: [
                   Expanded(
                     child: _buildActionCard(
                       context,
-                      title: 'Yapay Zekâ\nDanışmanı',
-                      subtitle: 'Soru Sor & Analiz Al',
-                      icon: Icons.chat_bubble_outline_rounded,
-                      color: Colors.indigo,
+                      title: 'Manuel PDF\nYükle',
+                      subtitle: 'Cihazdan Seç',
+                      icon: Icons.upload_file_rounded,
+                      color: Colors.teal,
                       onTap: () {
-                        // Doğrudan Chat Ekranına Geçiş
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
+                            builder: (context) =>
+                                const ContractAnalysisScreen(),
                           ),
                         );
                       },
@@ -158,15 +223,49 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                   Expanded(
                     child: _buildActionCard(
                       context,
-                      title: 'İhtarname &\nDilekçe',
-                      subtitle: 'Taslak Oluştur',
-                      icon: Icons.description_outlined,
-                      color: Colors.teal,
+                      title: 'Yapay Zekâ\nDanışmanı',
+                      subtitle: 'Soru Sor & Analiz Al',
+                      icon: Icons.chat_bubble_outline_rounded,
+                      color: Colors.indigo,
                       onTap: () {
-                        // Belge Üretme Sayfasına Geçiş
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
                       },
                     ),
                   ),
+                ],
+              ),
+
+              const SizedBox(height: 14),
+
+              // Hızlı İşlemler Grubu 2 - İHTARNAME & DİLEKÇE KARTI
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildActionCard(
+                      context,
+                      title: 'İhtarname &\nDilekçe',
+                      subtitle: 'Taslak Oluştur',
+                      icon: Icons.description_outlined,
+                      color: Colors.amber,
+                      onTap: () {
+                        // PetitionScreen Ekranına Yönlendirme
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PetitionScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 14),
+                  // Gelecekte eklenebilecek ek bir kart için boşluk kalıbı/esneklik
+                  const Expanded(child: SizedBox()),
                 ],
               ),
 
@@ -226,10 +325,16 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
         onTap: (index) {
           setState(() => _currentIndex = index);
           if (index == 1) {
-            // Chat sekmesine tıklandığında Chat ekranına geçiş
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ContractAnalysisScreen(),
+              ),
             );
           }
         },
