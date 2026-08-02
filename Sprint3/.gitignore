@@ -1,0 +1,27 @@
+# Build çıktıları
+Backend/Backend/bin/
+Backend/Backend/obj/
+Backend/.vs/
+
+# Visual Studio geçici dosyalar
+*.user
+*.suo
+*.cache
+.vs/
+
+# Flutter/Dart build
+mobil_arayuz/build/
+mobil_arayuz/.dart_tool/
+mobil_arayuz/.flutter-plugins
+mobil_arayuz/.flutter-plugins-dependencies
+
+# Node / React build
+Web/node_modules/
+Web/.next/
+Web/dist/
+
+# Genel
+*.bak
+__pycache__/
+*.pyc
+.env

@@ -1,117 +1,3 @@
-<<<<<<< HEAD
-# HakkımVar 
-
-## Önce bir düşünce deneyi
-
-Şu an Türkiye'de kirada oturanların sayısı 40 milyonun üzerinde. Bu insanların büyük çoğunluğu en az bir kez şu soruyu sormak zorunda kalmış:
-
-> "Ev sahibim kirayı bu kadar artırabilir mi? Bu yasal mı?"
-
-Cevabı bilen var mı? Pek yok. Çünkü mevzuat son 3 yılda 4 kez değişti, her değişiklikte ev sahipleri farklı bir şey iddia etti ve kiracılar doğruyu öğrenmek için ya avukata gitmek (₺3.000–10.000 tek seferlik danışmanlık) ya da forum postlarında çelişkili yorumlara bakmak zorunda kaldı.
-
-Sonuç? Binlerce kişi yasadışı artışı kabullendi — sadece ne yapacağını bilmediği için.
-
-**Biz bu boşluğu kapatıyoruz.**
-
-## Problem: Hem Büyük, Hem Kişisel
-
-İstanbul'da kira son 3 yılda ortalama %400 arttı. Türkiye'de bu dönemde kiracı ile ev sahibi arasındaki anlaşmazlık sayısı kayıt kıracak seviyelere ulaştı. Adli yardım bürolarında 6–8 aylık bekleme listesi oluştu. Ama daha da önemlisi:
-
-**Bu sorun jürinin tamamı tarafından şahsen yaşanmış ya da birinci elden gözlemlenmiş bir sorun.**
-
-Bunu söylüyorum çünkü bir projede "pazar büyük" demek ile "bu odadaki herkesin tanıdığı birinin başına geldi" demek çok farklı şeyler. HakkımVar ikinci kategoride.
-
-## Ne Yapıyor?
-
-Kiracı, telefonu ya da bilgisayarından kira sözleşmesinin fotoğrafını yüklüyor. Sistem 20–30 saniye içinde şunları yapıyor:
-
-- Sözleşmedeki her maddeyi okuyup yasaya aykırı olanları işaretliyor — *"Bu madde Türk Borçlar Kanunu'nun 340. maddesine aykırıdır"* gibi spesifik atıflarla.
-- Ev sahibinin talep ettiği artış oranını alıyor, o ay için geçerli yasal tavanı (TÜFE baz alınarak) hesaplıyor ve fazla talep edilen miktarı gösteriyor.
-- Bir düğmeye basılınca noter formatında, yasal olarak geçerli ihtarname üretiyor — sadece imzalanıp gönderilmesi yeterli.
-- *"15 gün içinde cevap vermezse ne olur?"* gibi kritik tarihleri takip ediyor, hatırlatma gönderiyor.
-
-> **Önemli bir not:** Sistem hukuki tavsiye vermiyor, hukuki bilgi veriyor. Bu ayrım hem etik hem de yasal açıdan kritik, hem de ürünü daha hızlı geliştirip piyasaya sürmemizi sağlıyor.
-
-## Yarışmada Neden Kazanır?
-
-Bootcamp'in puanlama sistemine bakınca bu projenin neden öne çıktığı netleşiyor.
-
-### En ağır kriter: AI model seçimi ve kullanımı 
-
-1. Sözleşme fotoğrafını okumak için görsel anlama kapasitesi yüksek bir model lazım
-2. Hukuki muhakeme için kesin ve alıntılı analiz yapan, "belki" demeye alışık bir model lazım
-3. Günlük konuşma arayüzü için ucuz ve hızlı çalışan bir model lazım
-4. Belge sınıflandırması (bu tahliye bildirimi mi, zam talebi mi?) için Türkçe'ye uyarlanmış küçük bir model lazım
-
-Her modelin seçiminin gerekçesi var. Bu, jüriye *"biz sadece API çağırdık"* değil *"biz neden hangi araç için hangi modelin en iyi olduğunu düşündük"* mesajını veriyor. Diğer ekiplerin büyük çoğunluğu bir modeli her şey için kullanacak.
-
-### İkinci ağır kriter: AI agent hafızası ve orkestrasyonu
-
-Bu projede agent mimarisi doğal olarak gerekli — sonradan eklenmiş değil. Şöyle açıklayayım:
-
-- **Birinci ajan** sözleşmeyi analiz ediyor.
-- **İkinci ajan** bu analizin çıktısını alarak hakların ne olduğunu söylüyor.
-- **Üçüncü ajan** ikincinin çıktısını kullanarak belge üretiyor.
-- **Dördüncü ajan** üçüncünün yarattığı eylem planını alıp tarih takibine dönüştürüyor.
-
-Hafıza ise kiracının tüm süreci boyunca geçmişini saklıyor — 6 ay sonra ev sahibi ödeme yapmadığını iddia etse sistem elimizdeki kayıtları hazır tutuyor.
-
-**Bu bir chat botu değil. Bu bir iş akışı.** Jüri bu farkı görecek.
-
-### Özgünlük
-
-Türkiye'de bunu yapan kimse yok. DoNotPay benzeri ürünler Türkiye'de hiç olmadı. Türkçe hukuki yardım araçları statik makale siteleri düzeyinde. Dünya genelinde benzer ürünler var ama Türk hukuku çok spesifik (Türk Borçlar Kanunu, değişen TÜFE hesaplama yöntemi, noter ihtarnamesi prosedürü) — bunlar direkt çeviri ile çözülmüyor.
-
-## Demo Günü Sahnesi
-
-Yarışmada en çok puan alan ekipler genellikle şu şeyi yapıyor: jürinin kafasında *"bu gerçekten çalışıyor"* anını yaratıyorlar.
-
-**Bizim demo anımız şu:**
-
-1. Sahnede kendi kira sözleşmemizi yüklüyoruz.
-2. 20 saniye içinde ekranda *"3. madde yasadışı — ev sahibi bu masrafı kiracıya yükleyemez"* yazısı beliriyor.
-3. Sonra *"ihtarname oluştur"* butonuna basıyoruz ve hazır, imzalanmayı bekleyen resmi belge geliyor.
-
-Jürideki herkesin ya kendi kira sözleşmesi var ya da yakınının. Biri o an telefonunu çıkarıp kendi sözleşmesini denemek isteyecek — **bu olursa oyunu kazandık demektir.**
-
-## Altı Haftada Ne Yapacağız?
-
-Projeyi ikişer haftalık üç sprint'e bölüyoruz:
-
-### Sprint 1 
-
-- Sözleşme analiz motoru çalışıyor.
-- Fotoğraf yükle, yasadışı madde bul akışı tamamlandı.
-- Türk Borçlar Kanunu'nun ilgili maddeleri bilgi tabanına eklendi.
-
-### Sprint 2 
-
-- Haklar danışmanı ve ihtarname üreteci tamamlandı.
-- Kullanıcı hafızası sistemi kuruldu — kiracının sözleşme detaylarını her seferinde tekrar girmesine gerek yok.
-- LangGraph orkestrasyon çalışıyor.
-
-### Sprint 3 
-
-- Ürün canlıya alındı.
-- 10 gerçek kiracıyla test edildi (herkese *"kira sözleşmen var mı?"* diye sormak yeterli).
-- Tarih takip sistemi eklendi.
-- Demo senaryosu hazır.
-
-## Sonuç
-
-Bazı projeler *"iyi fikir ama kim kullanır?"* sorusunu beraberinde getirir. HakkımVar'da bu soru yok. Türkiye'de 40 milyon kiracı var ve bunların önemli bir kısmı şu an aktif bir anlaşmazlık içinde.
-
-- Ürün somut.
-- Pazar var.
-- Mimari bootcamp kriterlerine göre tasarlandı.
-- Demo anı güçlü.
-
-Ve en önemlisi — bunu yaparsak jüri üyelerinden en az biri kalkıp *"benim de böyle bir şeye ihtiyacım vardı"* diyecek.
-
----
-
-*Bu doküman ekip içi tartışma için hazırlanmıştır.*
-=======
 <div align="center">
 
 <img src="https://img.icons8.com/color/120/scales--v1.png" alt="HakkımVar Logo" width="100"/>
@@ -127,11 +13,11 @@ Ve en önemlisi — bunu yaparsak jüri üyelerinden en az biri kalkıp *"benim 
 [![Streamlit](https://img.shields.io/badge/Streamlit-Arayüz-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io)
 [![License](https://img.shields.io/badge/Lisans-MIT-22c55e?style=for-the-badge)](LICENSE)
 
-**Türkiye'deki 40 milyonu aşkın kiracı için hukuki asistan**
+**Türkiye'deki 40 milyonu aşkın kiracı için hukuki asistan**https://youtu.be/BfS_y94pE6Y
 
 Kira sözleşmesinin fotoğrafını yükle → Saniyeler içinde yasadışı maddeleri gör → İhtarnameyi indir
 
-[Sprint 1](Sprint1/) · [Sprint 2](Sprint2/) · [Yol Haritası](Road_Map1.pdf) · [Product Backlog](https://miro.com/welcomeonboard/STdzU2R2ajVtQ0lTeFVyR1lKYWtXR0xrS1poUXlJeGJpWEJKY2ZGd0U4WnZwYjl6RjU5L2ZWZlY3dW52WFg5blFhdmtORzdMclEyRTJsU0dpRFpQQmY0V0JoaUxNVEZCeEE0cjRtSlFHY2NYVFk1TFBHcmpVU2U0YnBISEcyS2dBd044SHFHaVlWYWk0d3NxeHNmeG9BPT0hdjE=?share_link_id=409621996350)
+[Sprint 1](Sprint1/) · [Sprint 2](Sprint2/) · [Yol Haritası](Road_Map1.pdf) · [Product Backlog](https://miro.com/app/board/uXjVH-kKWLY=/)
 
 </div>
 
@@ -525,7 +411,7 @@ YZTA_Bootcamp_310/
 | **Sprint 1** | Hafta 1–2 | PDF işleme, ChromaDB embedding, vektör altyapısı | Tamamlandı |
 | **Sprint 2** | Hafta 3–4 | LangGraph çoklu ajan, FastAPI backend, Streamlit UI | Tamamlandı |
 | **Sprint 3** | Hafta 5 | mem0 uzun dönem hafıza, paralel madde değerlendirme, PDF export | Devam ediyor |
-| **Sprint 4** | Hafta 6 | Canlı deploy, yük testi, demo hazırlığı | Planlandı |
+| **Sprint 3** | Hafta 6 | Canlı deploy, yük testi, demo hazırlığı | Devam Ediyor |
 
 ---
 
@@ -606,17 +492,6 @@ Sprint1/
 └── Sprint_1_daily_scrum_ss_*.jpg/png  ← Daily Scrum görselleri
 ```
 
-### Sprint Planı
-
-| Sprint | Dönem | Hedef |
-|---|---|---|
-| **Sprint 1** | 1–2. Hafta | Temel altyapı, PDF işleme, embedding |
-| **Sprint 2** | 3–4. Hafta | Ajan sistemi, RAG, FastAPI, UI |
-| **Sprint 3** | 5. Hafta | İhtarname üretimi, PDF export |
-| **Sprint 4** | 6. Hafta | Canlı ortam, testler, demo |
-
----
-
 ## Sprint 2 — Kurulum ve Çalıştırma
 
 > **Sprint Dönemi:** 3–4. Haftalar | **Hedef:** LangGraph çoklu ajan, FastAPI backend, Streamlit UI
@@ -637,6 +512,31 @@ Sprint süresince Daily Scrum toplantıları **WhatsApp** yazışmaları ve **Go
 ![Daily Scrum 3](Sprint2/Sprint_2_daily_scrum_ss_3.jpeg)
 
 </details>
+
+---
+
+## ✅ Sprint Review
+
+Sprint 2 kapsamında yapay zekâ destekli kiracı hak asistanının temel fonksiyonları tamamlanarak çalışır bir MVP oluşturulmuştur.
+
+- LangGraph tabanlı çoklu ajan mimarisi başarıyla geliştirildi.
+- Contract Analyzer, Legal Reasoner ve Rights Advisor ajanları sisteme entegre edildi.
+- FastAPI backend ve temel API servisleri tamamlandı.
+- Streamlit tabanlı kullanıcı arayüzü geliştirilerek uçtan uca analiz akışı sağlandı.
+- TÜFE bazlı kira artışı kontrolü ve ihtarname oluşturma özellikleri sisteme eklendi.
+- RAG altyapısı ajan sistemiyle entegre edilerek hukuki değerlendirmelerin ilgili mevzuata dayandırılması sağlandı.
+
+---
+
+## 🔄 Sprint Retrospective
+
+| Karar | Açıklama |
+|-------|----------|
+| Takım İletişimi | Daily Scrum toplantıları ve düzenli ekip iletişimi sayesinde sprint boyunca yaşanan teknik sorunlar hızlı bir şekilde çözüldü. Bu iletişim düzeninin sonraki sprintlerde de sürdürülmesine karar verildi. |
+| Kod Entegrasyonu | Modüllerin entegrasyon sürecini daha verimli yönetebilmek amacıyla geliştirmelerin daha sık birleştirilmesi ve ara entegrasyon kontrollerinin artırılması planlandı. |
+| Performans ve Geliştirme | Analiz süresini iyileştirmek ve kullanıcı deneyimini artırmak amacıyla performans optimizasyonları ile yeni özelliklerin Sprint 3 kapsamında önceliklendirilmesine karar verildi. |
+
+---
 
 ### Hızlı Başlangıç
 
@@ -707,6 +607,287 @@ Sprint2/
 
 ---
 
+## Sprint 3 — Mobil, Web ve Tam Entegrasyon
+
+> **Sprint Dönemi:** 5–6. Haftalar | **Hedef:** Flutter mobil uygulama, React web arayüzü, C# backend API ve Python LangGraph ajan sisteminin tam entegrasyonu
+---
+### Sprint Board
+
+[![Sprint 3 Board](Sprint3/sprint3_board.png)](https://miro.com/app/board/uXjVH-kKWLY=/?share_link_id=566822862735)
+
+---
+
+## 🚀 Sprint 3'te Neler Tamamlandı?
+
+Sprint 3, **HakkımVar**'ı 4 katmanlı tam yığın (full-stack) bir platforma dönüştüren en kapsamlı sprinttir:
+
+- 📱 **Flutter Mobil Uygulama** — iOS & Android için native mobil uygulama geliştirildi
+- 🌐 **React + TypeScript Web Arayüzü** — Vite tabanlı modern web uygulaması hayata geçirildi
+- ⚙️ **C# ASP.NET Core 8 Backend** — JWT kimlik doğrulama, Entity Framework, SQL Server ile RESTful API
+- 🤖 **Python LangGraph Ajan Sistemi** — Sözleşme analizi ve dilekçe üretimi için çift grafik mimarisi
+
+---
+
+### Ürün Ekran Görüntüleri
+
+<details>
+<summary>📱 Mobil Uygulama Ekran Görüntüleri (tıkla)</summary>
+
+![Giriş Ekranı](Sprint3/Sprint_3_app_login.png)
+![Ana Sayfa](Sprint3/Sprint_3_app_anasayfa.png)
+![Sözleşme Analizi](Sprint3/Sprint_3_app_sozlesme_analiz.png)
+![AI Chat](Sprint3/Sprint_3_app_ai_chat.png)
+![İhtarname Oluştur](Sprint3/Sprint_3_app_ihtarname.png)
+![Haklar Rehberi](Sprint3/Sprint_3_app_haklar_rehberi.png)
+
+</details>
+
+---
+<details>
+<summary>🌐 Web Arayüzü Ekran Görüntüleri (tıkla)</summary>
+
+![Web Ana Sayfa](Sprint3/Sprint_3_web_anasayfa.png)
+![İhtarname Popup](Sprint3/Sprint_3_web_ihtarname_popup.png)
+![Dilekçe Üretici](Sprint3/Sprint_3_app_dilekce.png)
+
+</details>
+
+---
+
+## 🎥 Demo Videosu
+
+> 🎬 *[Ürün Demo Videosu](https://youtu.be/BfS_y94pE6Y)*
+
+<!-- Demo videosu hazır olduğunda Sprint_3_demo.mp4 ve thumbnail olarak Sprint_3_video_thumb.png ekleyin -->
+
+---
+
+
+## 🤖 Python Ajan Sistemi (KiraAgent)
+
+Sprint 3'te iki bağımsız LangGraph grafiği geliştirildi:
+
+### Contract Graph — Sözleşme Analizi
+
+| Node | Görev |
+|---|---|
+| `RouterNode` | Gelen isteği yönlendirir |
+| `RetrieverNode` | Chroma DB'den ilgili hukuki maddeleri getirir |
+| `ContractRetrieverNode` | Sözleşme metnini analiz için hazırlar |
+| `ContractAnalysisNode` | LLM ile madde bazlı risk analizi yapar |
+| `ContractSummaryNode` | Analiz özetini oluşturur |
+| `AnswerCheckNode` | Çıktıyı doğrular |
+
+### Petition Graph — Dilekçe Üretimi
+
+| Node | Görev |
+|---|---|
+| `PetitionTypeNode` | Dilekçe türünü belirler |
+| `PetitionRetrieverNode` | İlgili hukuki şablonları getirir |
+| `PetitionGeneratorNode` | GPT-4o ile noter formatında dilekçe üretir |
+| `AnswerCheckNode` | Çıktıyı doğrular |
+
+---
+
+## ⚙️ C# Backend API
+
+ASP.NET Core 8 ile geliştirilen RESTful API aşağıdaki modülleri içermektedir:
+
+| Controller | Endpoint | Açıklama |
+|---|---|---|
+| `AuthController` | `/api/auth` | Kayıt, giriş, JWT token yönetimi |
+| `ContractController` | `/api/contract` | Sözleşme analizi (Python agent'a yönlendirir) |
+| `ChatController` | `/api/chat` | Yapay zekâ sohbet oturumları |
+| `PetitionController` | `/api/petition` | Dilekçe & ihtarname üretimi |
+| `SessionController` | `/api/session` | Kullanıcı oturum yönetimi |
+| `MessageController` | `/api/message` | Sohbet mesaj geçmişi |
+
+**Altyapı:** Entity Framework Core 8 · SQL Server · BCrypt · JWT Bearer · Swagger/OpenAPI
+
+---
+
+## 📱 Flutter Mobil Uygulama
+
+| Ekran | Açıklama |
+|---|---|
+| `login_screen.dart` | E-posta & şifre ile giriş |
+| `Register.dart` | Yeni kullanıcı kaydı |
+| `home_screen.dart` | Ana sayfa ve hızlı işlemler |
+| `home_dashboard_screen.dart` | Kullanıcı dashboard'u |
+| `contract_analysis_screen.dart` | PDF yükleme & sözleşme analizi |
+| `petition_screen.dart` | İhtarname & dilekçe oluşturma |
+| `faq_screen.dart` | Kiracı hakları rehberi |
+| `profile_screen.dart` | Kullanıcı profili |
+
+---
+
+## 🌐 React Web Uygulaması
+
+| Sayfa | Açıklama |
+|---|---|
+| `LandingPage.tsx` | Pazarlama ana sayfası |
+| `Login.tsx` / `Register.tsx` | Kimlik doğrulama |
+| `HomeDashboard.tsx` | Kullanıcı dashboard'u |
+| `ContractAnalysis.tsx` | PDF yükleme & sözleşme analizi |
+| `AiChat.tsx` | Yapay zekâ sohbet arayüzü |
+| `Petition.tsx` | Dilekçe üretici |
+| `Profile.tsx` | Kullanıcı profili |
+
+---
+
+## 🛠️ Teknoloji Yığını
+
+```
+Mobil             │ Flutter 3.x (iOS & Android)
+Web               │ React 18 + TypeScript 5 + Vite
+Backend           │ ASP.NET Core 8, Entity Framework Core, SQL Server, JWT
+Yapay Zekâ        │ GPT-4o, text-embedding-3-small
+Ajan Mimarisi     │ LangGraph (Contract Graph + Petition Graph), LangChain, RAG
+Vektör Veritabanı │ Chroma DB
+Hukuki Kaynaklar  │ Türk Borçlar Kanunu PDF, Kira Hukuku Mevzuatı PDF
+```
+
+---
+
+## 🚀 Hızlı Başlangıç
+
+### 🤖 Python Ajan Sistemi (KiraAgent)
+
+```bash
+cd KiraAgent
+pip install -r requirements.txt
+# .env dosyasına OPENAI_API_KEY ekle
+python main.py
+```
+
+### ⚙️ C# Backend
+
+```bash
+cd Sprint3/Backend/Backend
+# appsettings.json içinde connection string'i güncelle
+dotnet restore
+dotnet run
+```
+
+Swagger: http://localhost:5000/swagger
+
+### 🌐 React Web Uygulaması
+
+```bash
+cd Web/hakkimvar-web
+npm install
+npm run dev
+```
+
+Web: http://localhost:5173
+
+### 📱 Flutter Mobil Uygulama
+
+```bash
+cd Sprint3/mobil_arayuz
+flutter pub get
+flutter run
+```
+
+---
+
+## 📁 Sprint 3 Klasör Yapısı
+
+```
+Sprint3/
+├── Backend/                         ← C# ASP.NET Core 8 Backend
+│   └── Backend/
+│       ├── Controllers/             ← Auth, Chat, Contract, Petition, Session
+│       ├── Services/                ← İş mantığı katmanı
+│       ├── Repositories/            ← Veri erişim katmanı
+│       ├── Entities/                ← User, ChatSession, ChatMessage
+│       ├── Interfaces/              ← Soyutlama katmanı
+│       ├── Migrations/              ← EF Core veritabanı migration'ları
+│       └── Program.cs               ← Uygulama giriş noktası
+│
+├── mobil_arayuz/                    ← Flutter Mobil Uygulama (iOS/Android)
+│   └── lib/
+│       ├── LoginPages/              ← Giriş & kayıt ekranları
+│       ├── pages/                   ← Ana ekranlar
+│       ├── models/                  ← Veri modelleri
+│       ├── services/                ← API servis katmanı
+│       └── utils/                   ← Token yönetimi, tema, sabitler
+│
+├── README.md                        ← Bu dosya
+├── sprint3_board.png                ← Sprint board ekran görüntüsü
+├── Sprint_3_daily_scrum_ss_*.png    ← Daily Scrum görselleri
+└── Sprint_3_app_*.png               ← Uygulama ekran görüntüleri
+
+Web/hakkimvar-web/                   ← React + TypeScript Web Uygulaması
+├── src/
+│   ├── pages/                       ← Landing, Login, Dashboard, Contract, Chat, Petition
+│   ├── components/                  ← RightsDetailModal, TermsModal
+│   ├── services/                    ← api, authService, pdfService
+│   ├── context/                     ← ThemeContext
+│   └── utils/                       ← tokenManager
+└── package.json
+
+KiraAgent/                           ← Python LangGraph Ajan Sistemi
+├── nodes/                           ← LangGraph node'ları
+├── chains/                          ← LLM zincirleri
+├── VectorDatabase/                  ← Chroma DB + PDF'ler
+├── contract_graph.py                ← Sözleşme analiz grafiği
+├── petition_graph.py                ← Dilekçe üretim grafiği
+└── main.py                          ← Ana giriş noktası
+```
+
+---
+
+## 📅 Daily Scrum
+
+Sprint süresince Daily Scrum toplantıları **WhatsApp** yazışmaları ve **Google Meet** görüşmeleri aracılığıyla yürütülmüştür. Her toplantıda günlük ilerleme, tamamlanan görevler, karşılaşılan engeller ve bir sonraki adımlar değerlendirilmiştir.
+
+<details>
+<summary>📸 Daily Scrum Ekran Görüntüleri (tıkla)</summary>
+
+![Daily Scrum 1](Sprint_3_daily_scrum_ss_1.png)
+![Daily Scrum 2](Sprint_3_daily_scrum_ss_2.png)
+![Daily Scrum 3](Sprint_3_daily_scrum_ss_3.png)
+
+</details>
+
+---
+
+## 📊 Sprint Review
+
+Sprint 3 kapsamında **HakkımVar** belge oluşturma süreçleri tamamlanmış ve kullanıcıların yapay zekâ ile etkileşim kurabileceği yeni özellikler sisteme kazandırılmıştır.
+
+- ✅ Kullanıcıların PDF formatındaki kira sözleşmelerini yükleyerek analiz edebileceği sözleşme analiz ekranı geliştirildi.
+- ✅ Analiz sonucunda risk skoru, analiz özeti ve riskli sözleşme maddelerinin kart yapısında görüntülenmesi sağlandı.
+- ✅ Document Generator Agent geliştirilerek tespit edilen risklere özel ihtarname ve dilekçe taslaklarının tek tıkla oluşturulması sağlandı.
+- ✅ Oluşturulan hukuki belgelerin PDF formatında görüntülenmesi ve indirilebilmesi desteklendi.
+- ✅ HakkımVar AI sohbet modülü geliştirilerek kullanıcıların kira hukuku ile ilgili sorularını doğal dilde yöneltebilmesi ve mevzuata uygun yanıtlar alabilmesi sağlandı.
+- ✅ Backend altyapısı ekip tarafından geliştirilerek yeni modüllerin sistemle entegrasyonu tamamlandı.
+
+---
+
+## 🔁 Sprint Retrospective
+
+| Karar | Açıklama |
+|---|---|
+| 🤝 **Takım İçi Koordinasyon** | Backend, yapay zekâ ajanları ve kullanıcı arayüzü geliştirmeleri eş zamanlı yürütüldü. Düzenli ekip iletişimi sayesinde entegrasyon süreci planlandığı şekilde tamamlandı. |
+| ⚡ **Belge Üretim Süreci** | Dilekçe oluşturma ve analiz sonuçlarının kullanıcıya sunulması sırasında edinilen deneyimler doğrultusunda belge şablonlarının ve çıktı formatlarının geliştirilmeye devam edilmesine karar verildi. |
+| 🎨 **Demo Hazırlığı** | Son sprintte performans optimizasyonu, kullanıcı deneyimi iyileştirmeleri ve kapsamlı sistem testlerine öncelik verilmesine karar verildi. |
+
+---
+
+## 🗺️ Sprint Planı
+
+| Sprint | Dönem | Hedef | Durum |
+|---|---|---|---|
+| ✅ **[Sprint 1](../Sprint1/)** | 1–2. Hafta | Temel altyapı, PDF işleme, embedding | Tamamlandı |
+| ✅ **[Sprint 2](../Sprint2/)** | 3–4. Hafta | Ajan sistemi, RAG, FastAPI, Streamlit UI | Tamamlandı |
+| ✅ **Sprint 3** | 5–6. Hafta | Flutter mobil, React web, C# backend, LangGraph tam entegrasyon | Tamamlandı |
+
+<div align="center">
+
+---
+
 ## Takım
 
 **YZTA Bootcamp 2026 — Takım 310**
@@ -747,4 +928,3 @@ HakkımVar bir **hukuki bilgi aracıdır**, hukuki tavsiye niteliği taşımaz. 
 *Türkiye'deki her kiracının hakkını bilmesi için.*
 
 </div>
->>>>>>> origin/master
