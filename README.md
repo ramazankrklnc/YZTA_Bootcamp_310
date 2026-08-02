@@ -615,18 +615,6 @@ Sprint2/
 
 [![Sprint 3 Board](Sprint3/sprint3_board.png)](https://miro.com/app/board/uXjVH-kKWLY=/?share_link_id=566822862735)
 
-### Tamamlanan İşler (Done)
-
-| # | Görev | Kategori |
-|---|---|---|
-| 1 | Sözleşme Analiz Motoru (LLM Hukuki Muhakeme Entegrasyonu) | 🔴 Kod |
-| 2 | LangGraph ile Çoklu Ajan (Orkestrasyon) Altyapısının Kurulması | 🔴 Kod |
-| 3 | Chroma DB Vektör Veritabanı Entegrasyonu | 🔴 Kod |
-| 4 | OpenAI text-embedding-3-small Entegrasyonu | 🔴 Kod |
-| 5 | Noter Formatında Hukuki İhtarname Üreteci Geliştirilmesi | 🟢 Diğer |
-| 6 | Türk Borçlar Kanunu ve Kira Mevzuatı PDF'lerinin Yüklenmesi | 🟢 Diğer |
-| 7 | Proje Tanıtım Slaytları ve Arayüz Taslakları (Figma Mockup) | 🟡 Tasarım |
-
 ### Ürün Ekran Görüntüleri
 
 <details>
