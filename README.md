@@ -607,6 +607,97 @@ Sprint2/
 
 ---
 
+## Sprint 3 — Mobil, Web ve Tam Entegrasyon
+
+> **Sprint Dönemi:** 5–6. Haftalar | **Hedef:** Flutter mobil uygulama, React web arayüzü, C# backend API ve Python LangGraph ajan sisteminin tam entegrasyonu
+
+### Sprint Board
+
+[![Sprint 3 Board](Sprint3/sprint3_board.png)](https://miro.com/app/board/uXjVH-kKWLY=/?share_link_id=566822862735)
+
+### Tamamlanan İşler (Done)
+
+| # | Görev | Kategori |
+|---|---|---|
+| 1 | Sözleşme Analiz Motoru (LLM Hukuki Muhakeme Entegrasyonu) | 🔴 Kod |
+| 2 | LangGraph ile Çoklu Ajan (Orkestrasyon) Altyapısının Kurulması | 🔴 Kod |
+| 3 | Chroma DB Vektör Veritabanı Entegrasyonu | 🔴 Kod |
+| 4 | OpenAI text-embedding-3-small Entegrasyonu | 🔴 Kod |
+| 5 | Noter Formatında Hukuki İhtarname Üreteci Geliştirilmesi | 🟢 Diğer |
+| 6 | Türk Borçlar Kanunu ve Kira Mevzuatı PDF'lerinin Yüklenmesi | 🟢 Diğer |
+| 7 | Proje Tanıtım Slaytları ve Arayüz Taslakları (Figma Mockup) | 🟡 Tasarım |
+
+### Ürün Ekran Görüntüleri
+
+<details>
+<summary>📱 Mobil Uygulama Ekran Görüntüleri (tıkla)</summary>
+
+![Giriş Ekranı](Sprint3/Sprint_3_app_login.png)
+![Ana Sayfa](Sprint3/Sprint_3_app_anasayfa.png)
+![Sözleşme Analizi](Sprint3/Sprint_3_app_sozlesme_analiz.png)
+![AI Chat](Sprint3/Sprint_3_app_ai_chat.png)
+![İhtarname Oluştur](Sprint3/Sprint_3_app_ihtarname.png)
+![Haklar Rehberi](Sprint3/Sprint_3_app_haklar_rehberi.png)
+
+</details>
+
+<details>
+<summary>🌐 Web Arayüzü Ekran Görüntüleri (tıkla)</summary>
+
+![Web Ana Sayfa](Sprint3/Sprint_3_web_anasayfa.png)
+![İhtarname Popup](Sprint3/Sprint_3_web_ihtarname_popup.png)
+![Dilekçe Üretici](Sprint3/Sprint_3_app_dilekce.png)
+
+</details>
+
+### Daily Scrum
+
+Sprint süresince Daily Scrum toplantıları **WhatsApp** yazışmaları ve **Google Meet** görüşmeleri aracılığıyla yürütülmüştür. Her toplantıda günlük ilerleme, tamamlanan görevler, karşılaşılan engeller ve bir sonraki adımlar değerlendirilmiştir.
+
+<details>
+<summary>📸 Daily Scrum Ekran Görüntüleri (tıkla)</summary>
+
+![Daily Scrum 1](Sprint3/Sprint_3_daily_scrum_ss_1.png)
+![Daily Scrum 2](Sprint3/Sprint_3_daily_scrum_ss_2.png)
+![Daily Scrum 3](Sprint3/Sprint_3_daily_scrum_ss_3.png)
+
+</details>
+
+### Sprint Review
+
+Sprint 3 kapsamında HakkımVar tam yığın bir platforma dönüştürülmüştür:
+
+- Flutter mobil uygulama (iOS & Android) geliştirildi
+- React + TypeScript web uygulaması tamamlandı
+- C# ASP.NET Core 8 RESTful API geliştirildi (JWT, EF Core, SQL Server)
+- Python LangGraph çift grafik mimarisi kuruldu (Contract + Petition)
+- Chroma DB RAG entegrasyonu tamamlandı
+- 🔄 OCR görsel analiz ve sesli komut entegrasyonu devam ediyor
+
+### Sprint Retrospective
+
+| Karar | Açıklama |
+|---|---|
+| Takım İletişimi | Daily Scrum toplantıları ve düzenli ekip iletişimi sayesinde teknik sorunlar hızlı çözüldü; bu düzenin korunmasına karar verildi |
+| Entegrasyon Hızı | Mobil, web ve backend modüllerinin daha sık birleştirilmesi ve ara entegrasyon kontrollerinin artırılması planlandı |
+| UI/UX Kalitesi | Kullanıcı arayüzünün gerçek kullanıcı testleriyle iyileştirilmesi Sprint 4'te önceliklendirildi |
+| Canlı Ortam | Production deployment için Render/Railway/Azure değerlendiriliyor |
+
+### Sprint 3 Klasör Yapısı
+
+```
+Sprint3/
+├── Backend/                      ← C# ASP.NET Core 8 Backend
+├── mobil_arayuz/                 ← Flutter Mobil Uygulama (iOS/Android)
+├── Web/hakkimvar-web/            ← React + TypeScript Web Uygulaması
+├── README.md
+├── sprint3_board.png
+├── Sprint_3_daily_scrum_ss_*.png
+└── Sprint_3_app_*.png
+```
+
+---
+
 ## Takım
 
 **YZTA Bootcamp 2026 — Takım 310**
