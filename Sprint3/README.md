@@ -96,7 +96,7 @@ Sprint 3, **HakkımVar**'ı 4 katmanlı tam yığın (full-stack) bir platforma 
 
 ## 🎥 Demo Videosu
 
-> 🎬 *Demo videosu hazır olduğunda buraya eklenecektir.*
+> 🎬 *[Ürün Demo Videosu](https://youtu.be/BfS_y94pE6Y)*
 
 <!-- Demo videosu hazır olduğunda Sprint_3_demo.mp4 ve thumbnail olarak Sprint_3_video_thumb.png ekleyin -->
 
