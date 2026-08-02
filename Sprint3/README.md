@@ -347,15 +347,14 @@ Sprint süresince Daily Scrum toplantıları **WhatsApp** yazışmaları ve **Go
 
 ## 📊 Sprint Review
 
-Sprint 3 kapsamında **HakkımVar** tam yığın bir platforma dönüştürülmüştür:
+Sprint 3 kapsamında **HakkımVar** belge oluşturma süreçleri tamamlanmış ve kullanıcıların yapay zekâ ile etkileşim kurabileceği yeni özellikler sisteme kazandırılmıştır.
 
-- ✅ Flutter mobil uygulama (iOS & Android) geliştirildi
-- ✅ React + TypeScript web uygulaması tamamlandı
-- ✅ C# ASP.NET Core 8 RESTful API geliştirildi (JWT, EF Core, SQL Server)
-- ✅ Python LangGraph çift grafik mimarisi kuruldu (Contract + Petition)
-- ✅ Chroma DB RAG entegrasyonu tamamlandı
-- ✅ Tüm katmanlar arası API entegrasyonu sağlandı
-- ✅ OCR görsel analiz ve sesli komut entegrasyonu devam ediyor
+- ✅ Kullanıcıların PDF formatındaki kira sözleşmelerini yükleyerek analiz edebileceği sözleşme analiz ekranı geliştirildi.
+- ✅ Analiz sonucunda risk skoru, analiz özeti ve riskli sözleşme maddelerinin kart yapısında görüntülenmesi sağlandı.
+- ✅ Document Generator Agent geliştirilerek tespit edilen risklere özel ihtarname ve dilekçe taslaklarının tek tıkla oluşturulması sağlandı.
+- ✅ Oluşturulan hukuki belgelerin PDF formatında görüntülenmesi ve indirilebilmesi desteklendi.
+- ✅ HakkımVar AI sohbet modülü geliştirilerek kullanıcıların kira hukuku ile ilgili sorularını doğal dilde yöneltebilmesi ve mevzuata uygun yanıtlar alabilmesi sağlandı.
+- ✅ Backend altyapısı ekip tarafından geliştirilerek yeni modüllerin sistemle entegrasyonu tamamlandı.
 
 ---
 
@@ -363,10 +362,9 @@ Sprint 3 kapsamında **HakkımVar** tam yığın bir platforma dönüştürülm�
 
 | Karar | Açıklama |
 |---|---|
-| 🤝 **Takım İletişimi** | Daily Scrum toplantıları ve düzenli ekip iletişimi sayesinde teknik sorunlar hızlı çözüldü; bu düzenin korunmasına karar verildi |
-| ⚡ **Entegrasyon Hızı** | Mobil, web ve backend modüllerinin daha sık birleştirilmesi ve ara entegrasyon kontrollerinin artırılması planlandı |
-| 🎨 **UI/UX Kalitesi** | Kullanıcı arayüzünün gerçek kullanıcı testleriyle iyileştirilmesi Sprint 4'te önceliklendirildi |
-| 🚀 **Canlı Ortam** | Production deployment için Render/Railway/Azure değerlendiriliyor |
+| 🤝 **Takım İçi Koordinasyon ** | Backend, yapay zekâ ajanları ve kullanıcı arayüzü geliştirmeleri eş zamanlı yürütüldü. Düzenli ekip iletişimi sayesinde entegrasyon süreci planlandığı şekilde tamamlandı. |
+| ⚡ **Belge Üretim Süreci** | Dilekçe oluşturma ve analiz sonuçlarının kullanıcıya sunulması sırasında edinilen deneyimler doğrultusunda belge şablonlarının ve çıktı formatlarının geliştirilmeye devam edilmesine karar verildi. |
+| 🎨 **Demo Hazırlığı * | Son sprintte performans optimizasyonu, kullanıcı deneyimi iyileştirmeleri ve kapsamlı sistem testlerine öncelik verilmesine karar verildi. |
 
 ---
 
