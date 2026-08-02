@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobil_arayuz/LoginPages/login_screen.dart';
-import 'package:mobil_arayuz/LoginPages/terms_bottom_sheet.dart'; // TermsBottomSheet import edildi
-import 'package:mobil_arayuz/pages/faq_screen.dart'; // FaqScreen import edildi
+import 'package:mobil_arayuz/LoginPages/terms_bottom_sheet.dart';
+import 'package:mobil_arayuz/pages/faq_screen.dart';
 import 'package:mobil_arayuz/utils/theme_manager.dart';
 import 'package:mobil_arayuz/utils/token_manager.dart';
 
@@ -15,6 +15,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _notificationsEnabled = true;
 
+  // ÇIKIŞ YAPMA DİALOGU
   void _logout() {
     showDialog(
       context: context,
@@ -56,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TEMA RENK DEĞİŞKENLERİ
+    // 🌙 TEMA RENK DEĞİŞKENLERİ
     final isDark = ThemeManager.isDarkMode;
     final cardBgColor = isDark ? const Color(0xFF1E1E1E) : Colors.white;
     final primaryTextColor = isDark ? Colors.white : Colors.grey.shade900;
@@ -79,6 +80,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: cardBgColor,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(color: borderColor),
+                  boxShadow: [
+                    BoxShadow(
+                      color: isDark ? Colors.black26 : Colors.black12,
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
                 child: Row(
                   children: [
@@ -172,11 +180,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       title: Text(
                         'Bildirimler',
-                        style: TextStyle(color: primaryTextColor),
+                        style: TextStyle(color: primaryTextColor, fontSize: 14),
                       ),
                       subtitle: Text(
                         'Kira artış dönemi ve hukuki hatırlatmalar',
-                        style: TextStyle(color: secondaryTextColor),
+                        style: TextStyle(
+                          color: secondaryTextColor,
+                          fontSize: 12,
+                        ),
                       ),
                       value: _notificationsEnabled,
                       onChanged: (val) {
@@ -194,11 +205,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       title: Text(
                         'Karanlık Mod',
-                        style: TextStyle(color: primaryTextColor),
+                        style: TextStyle(color: primaryTextColor, fontSize: 14),
                       ),
                       subtitle: Text(
                         'Gece teması görünümünü aktif et',
-                        style: TextStyle(color: secondaryTextColor),
+                        style: TextStyle(
+                          color: secondaryTextColor,
+                          fontSize: 12,
+                        ),
                       ),
                       value: isDark,
                       onChanged: (val) {
@@ -224,7 +238,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Column(
                   children: [
-                    // 1. Sıkça Sorulan Sorular Yönlendirmesi
+                    // Sıkça Sorulan Sorular
                     _buildProfileMenuItem(
                       icon: Icons.quiz_outlined,
                       title: 'Sıkça Sorulan Sorular',
@@ -241,7 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Divider(height: 1, color: borderColor),
 
-                    // 2. Gizlilik Politikası / KVKK Modal Açılışı
+                    // Gizlilik Politikası / KVKK
                     _buildProfileMenuItem(
                       icon: Icons.privacy_tip_outlined,
                       title: 'Gizlilik Politikası (KVKK)',
@@ -259,7 +273,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Divider(height: 1, color: borderColor),
 
-                    // 3. Kullanım Koşulları Modal Açılışı
+                    // Kullanım Koşulları
                     _buildProfileMenuItem(
                       icon: Icons.gavel_outlined,
                       title: 'Kullanım Koşulları',
@@ -277,7 +291,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Divider(height: 1, color: borderColor),
 
-                    // 4. Uygulama Sürümü Hakkında Penceresi
+                    // Uygulama Sürümü
                     _buildProfileMenuItem(
                       icon: Icons.info_outline_rounded,
                       title: 'Uygulama Sürümü',
