@@ -13,7 +13,7 @@
 [![Streamlit](https://img.shields.io/badge/Streamlit-Arayüz-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io)
 [![License](https://img.shields.io/badge/Lisans-MIT-22c55e?style=for-the-badge)](LICENSE)
 
-**Türkiye'deki 40 milyonu aşkın kiracı için hukuki asistan**
+**Türkiye'deki 40 milyonu aşkın kiracı için hukuki asistan**https://youtu.be/BfS_y94pE6Y
 
 Kira sözleşmesinin fotoğrafını yükle → Saniyeler içinde yasadışı maddeleri gör → İhtarnameyi indir
 
@@ -656,7 +656,7 @@ Sprint 3, **HakkımVar**'ı 4 katmanlı tam yığın (full-stack) bir platforma 
 
 ## 🎥 Demo Videosu
 
-> 🎬 *Demo videosu hazır olduğunda buraya eklenecektir.*
+> 🎬 https://youtu.be/BfS_y94pE6Y
 
 <!-- Demo videosu hazır olduğunda Sprint_3_demo.mp4 ve thumbnail olarak Sprint_3_video_thumb.png ekleyin -->
 
