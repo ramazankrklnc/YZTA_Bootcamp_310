@@ -1,0 +1,30 @@
+name: mobil_arayuz
+description: "HakkımVar - Yapay Zekâ Destekli Kira ve Hukuk Danışmanı Mobil Uygulaması"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  http: ^1.6.0
+  file_picker: ^8.1.7
+  syncfusion_flutter_pdf: ^28.1.33
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Varlık (Asset) tanımlamaları
+  assets:
+    - assets/ornek_kira_sozlesmesi.pdf
