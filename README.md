@@ -641,8 +641,8 @@ Sprint 3, **HakkımVar**'ı 4 katmanlı tam yığın (full-stack) bir platforma 
 ![Haklar Rehberi](Sprint3/Sprint_3_app_haklar_rehberi.png)
 
 </details>
----
 
+---
 <details>
 <summary>🌐 Web Arayüzü Ekran Görüntüleri (tıkla)</summary>
 
