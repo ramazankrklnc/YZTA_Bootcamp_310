@@ -610,10 +610,23 @@ Sprint2/
 ## Sprint 3 — Mobil, Web ve Tam Entegrasyon
 
 > **Sprint Dönemi:** 5–6. Haftalar | **Hedef:** Flutter mobil uygulama, React web arayüzü, C# backend API ve Python LangGraph ajan sisteminin tam entegrasyonu
-
+---
 ### Sprint Board
 
 [![Sprint 3 Board](Sprint3/sprint3_board.png)](https://miro.com/app/board/uXjVH-kKWLY=/?share_link_id=566822862735)
+
+---
+
+## 🚀 Sprint 3'te Neler Tamamlandı?
+
+Sprint 3, **HakkımVar**'ı 4 katmanlı tam yığın (full-stack) bir platforma dönüştüren en kapsamlı sprinttir:
+
+- 📱 **Flutter Mobil Uygulama** — iOS & Android için native mobil uygulama geliştirildi
+- 🌐 **React + TypeScript Web Arayüzü** — Vite tabanlı modern web uygulaması hayata geçirildi
+- ⚙️ **C# ASP.NET Core 8 Backend** — JWT kimlik doğrulama, Entity Framework, SQL Server ile RESTful API
+- 🤖 **Python LangGraph Ajan Sistemi** — Sözleşme analizi ve dilekçe üretimi için çift grafik mimarisi
+
+---
 
 ### Ürün Ekran Görüntüleri
 
@@ -628,6 +641,7 @@ Sprint2/
 ![Haklar Rehberi](Sprint3/Sprint_3_app_haklar_rehberi.png)
 
 </details>
+---
 
 <details>
 <summary>🌐 Web Arayüzü Ekran Görüntüleri (tıkla)</summary>
@@ -638,51 +652,239 @@ Sprint2/
 
 </details>
 
-### Daily Scrum
+---
+
+## 🎥 Demo Videosu
+
+> 🎬 *Demo videosu hazır olduğunda buraya eklenecektir.*
+
+<!-- Demo videosu hazır olduğunda Sprint_3_demo.mp4 ve thumbnail olarak Sprint_3_video_thumb.png ekleyin -->
+
+---
+
+
+## 🤖 Python Ajan Sistemi (KiraAgent)
+
+Sprint 3'te iki bağımsız LangGraph grafiği geliştirildi:
+
+### Contract Graph — Sözleşme Analizi
+
+| Node | Görev |
+|---|---|
+| `RouterNode` | Gelen isteği yönlendirir |
+| `RetrieverNode` | Chroma DB'den ilgili hukuki maddeleri getirir |
+| `ContractRetrieverNode` | Sözleşme metnini analiz için hazırlar |
+| `ContractAnalysisNode` | LLM ile madde bazlı risk analizi yapar |
+| `ContractSummaryNode` | Analiz özetini oluşturur |
+| `AnswerCheckNode` | Çıktıyı doğrular |
+
+### Petition Graph — Dilekçe Üretimi
+
+| Node | Görev |
+|---|---|
+| `PetitionTypeNode` | Dilekçe türünü belirler |
+| `PetitionRetrieverNode` | İlgili hukuki şablonları getirir |
+| `PetitionGeneratorNode` | GPT-4o ile noter formatında dilekçe üretir |
+| `AnswerCheckNode` | Çıktıyı doğrular |
+
+---
+
+## ⚙️ C# Backend API
+
+ASP.NET Core 8 ile geliştirilen RESTful API aşağıdaki modülleri içermektedir:
+
+| Controller | Endpoint | Açıklama |
+|---|---|---|
+| `AuthController` | `/api/auth` | Kayıt, giriş, JWT token yönetimi |
+| `ContractController` | `/api/contract` | Sözleşme analizi (Python agent'a yönlendirir) |
+| `ChatController` | `/api/chat` | Yapay zekâ sohbet oturumları |
+| `PetitionController` | `/api/petition` | Dilekçe & ihtarname üretimi |
+| `SessionController` | `/api/session` | Kullanıcı oturum yönetimi |
+| `MessageController` | `/api/message` | Sohbet mesaj geçmişi |
+
+**Altyapı:** Entity Framework Core 8 · SQL Server · BCrypt · JWT Bearer · Swagger/OpenAPI
+
+---
+
+## 📱 Flutter Mobil Uygulama
+
+| Ekran | Açıklama |
+|---|---|
+| `login_screen.dart` | E-posta & şifre ile giriş |
+| `Register.dart` | Yeni kullanıcı kaydı |
+| `home_screen.dart` | Ana sayfa ve hızlı işlemler |
+| `home_dashboard_screen.dart` | Kullanıcı dashboard'u |
+| `contract_analysis_screen.dart` | PDF yükleme & sözleşme analizi |
+| `petition_screen.dart` | İhtarname & dilekçe oluşturma |
+| `faq_screen.dart` | Kiracı hakları rehberi |
+| `profile_screen.dart` | Kullanıcı profili |
+
+---
+
+## 🌐 React Web Uygulaması
+
+| Sayfa | Açıklama |
+|---|---|
+| `LandingPage.tsx` | Pazarlama ana sayfası |
+| `Login.tsx` / `Register.tsx` | Kimlik doğrulama |
+| `HomeDashboard.tsx` | Kullanıcı dashboard'u |
+| `ContractAnalysis.tsx` | PDF yükleme & sözleşme analizi |
+| `AiChat.tsx` | Yapay zekâ sohbet arayüzü |
+| `Petition.tsx` | Dilekçe üretici |
+| `Profile.tsx` | Kullanıcı profili |
+
+---
+
+## 🛠️ Teknoloji Yığını
+
+```
+Mobil             │ Flutter 3.x (iOS & Android)
+Web               │ React 18 + TypeScript 5 + Vite
+Backend           │ ASP.NET Core 8, Entity Framework Core, SQL Server, JWT
+Yapay Zekâ        │ GPT-4o, text-embedding-3-small
+Ajan Mimarisi     │ LangGraph (Contract Graph + Petition Graph), LangChain, RAG
+Vektör Veritabanı │ Chroma DB
+Hukuki Kaynaklar  │ Türk Borçlar Kanunu PDF, Kira Hukuku Mevzuatı PDF
+```
+
+---
+
+## 🚀 Hızlı Başlangıç
+
+### 🤖 Python Ajan Sistemi (KiraAgent)
+
+```bash
+cd KiraAgent
+pip install -r requirements.txt
+# .env dosyasına OPENAI_API_KEY ekle
+python main.py
+```
+
+### ⚙️ C# Backend
+
+```bash
+cd Sprint3/Backend/Backend
+# appsettings.json içinde connection string'i güncelle
+dotnet restore
+dotnet run
+```
+
+Swagger: http://localhost:5000/swagger
+
+### 🌐 React Web Uygulaması
+
+```bash
+cd Web/hakkimvar-web
+npm install
+npm run dev
+```
+
+Web: http://localhost:5173
+
+### 📱 Flutter Mobil Uygulama
+
+```bash
+cd Sprint3/mobil_arayuz
+flutter pub get
+flutter run
+```
+
+---
+
+## 📁 Sprint 3 Klasör Yapısı
+
+```
+Sprint3/
+├── Backend/                         ← C# ASP.NET Core 8 Backend
+│   └── Backend/
+│       ├── Controllers/             ← Auth, Chat, Contract, Petition, Session
+│       ├── Services/                ← İş mantığı katmanı
+│       ├── Repositories/            ← Veri erişim katmanı
+│       ├── Entities/                ← User, ChatSession, ChatMessage
+│       ├── Interfaces/              ← Soyutlama katmanı
+│       ├── Migrations/              ← EF Core veritabanı migration'ları
+│       └── Program.cs               ← Uygulama giriş noktası
+│
+├── mobil_arayuz/                    ← Flutter Mobil Uygulama (iOS/Android)
+│   └── lib/
+│       ├── LoginPages/              ← Giriş & kayıt ekranları
+│       ├── pages/                   ← Ana ekranlar
+│       ├── models/                  ← Veri modelleri
+│       ├── services/                ← API servis katmanı
+│       └── utils/                   ← Token yönetimi, tema, sabitler
+│
+├── README.md                        ← Bu dosya
+├── sprint3_board.png                ← Sprint board ekran görüntüsü
+├── Sprint_3_daily_scrum_ss_*.png    ← Daily Scrum görselleri
+└── Sprint_3_app_*.png               ← Uygulama ekran görüntüleri
+
+Web/hakkimvar-web/                   ← React + TypeScript Web Uygulaması
+├── src/
+│   ├── pages/                       ← Landing, Login, Dashboard, Contract, Chat, Petition
+│   ├── components/                  ← RightsDetailModal, TermsModal
+│   ├── services/                    ← api, authService, pdfService
+│   ├── context/                     ← ThemeContext
+│   └── utils/                       ← tokenManager
+└── package.json
+
+KiraAgent/                           ← Python LangGraph Ajan Sistemi
+├── nodes/                           ← LangGraph node'ları
+├── chains/                          ← LLM zincirleri
+├── VectorDatabase/                  ← Chroma DB + PDF'ler
+├── contract_graph.py                ← Sözleşme analiz grafiği
+├── petition_graph.py                ← Dilekçe üretim grafiği
+└── main.py                          ← Ana giriş noktası
+```
+
+---
+
+## 📅 Daily Scrum
 
 Sprint süresince Daily Scrum toplantıları **WhatsApp** yazışmaları ve **Google Meet** görüşmeleri aracılığıyla yürütülmüştür. Her toplantıda günlük ilerleme, tamamlanan görevler, karşılaşılan engeller ve bir sonraki adımlar değerlendirilmiştir.
 
 <details>
 <summary>📸 Daily Scrum Ekran Görüntüleri (tıkla)</summary>
 
-![Daily Scrum 1](Sprint3/Sprint_3_daily_scrum_ss_1.png)
-![Daily Scrum 2](Sprint3/Sprint_3_daily_scrum_ss_2.png)
-![Daily Scrum 3](Sprint3/Sprint_3_daily_scrum_ss_3.png)
+![Daily Scrum 1](Sprint_3_daily_scrum_ss_1.png)
+![Daily Scrum 2](Sprint_3_daily_scrum_ss_2.png)
+![Daily Scrum 3](Sprint_3_daily_scrum_ss_3.png)
 
 </details>
 
-### Sprint Review
+---
 
-Sprint 3 kapsamında HakkımVar tam yığın bir platforma dönüştürülmüştür:
+## 📊 Sprint Review
 
-- Flutter mobil uygulama (iOS & Android) geliştirildi
-- React + TypeScript web uygulaması tamamlandı
-- C# ASP.NET Core 8 RESTful API geliştirildi (JWT, EF Core, SQL Server)
-- Python LangGraph çift grafik mimarisi kuruldu (Contract + Petition)
-- Chroma DB RAG entegrasyonu tamamlandı
-- 🔄 OCR görsel analiz ve sesli komut entegrasyonu devam ediyor
+Sprint 3 kapsamında **HakkımVar** belge oluşturma süreçleri tamamlanmış ve kullanıcıların yapay zekâ ile etkileşim kurabileceği yeni özellikler sisteme kazandırılmıştır.
 
-### Sprint Retrospective
+- ✅ Kullanıcıların PDF formatındaki kira sözleşmelerini yükleyerek analiz edebileceği sözleşme analiz ekranı geliştirildi.
+- ✅ Analiz sonucunda risk skoru, analiz özeti ve riskli sözleşme maddelerinin kart yapısında görüntülenmesi sağlandı.
+- ✅ Document Generator Agent geliştirilerek tespit edilen risklere özel ihtarname ve dilekçe taslaklarının tek tıkla oluşturulması sağlandı.
+- ✅ Oluşturulan hukuki belgelerin PDF formatında görüntülenmesi ve indirilebilmesi desteklendi.
+- ✅ HakkımVar AI sohbet modülü geliştirilerek kullanıcıların kira hukuku ile ilgili sorularını doğal dilde yöneltebilmesi ve mevzuata uygun yanıtlar alabilmesi sağlandı.
+- ✅ Backend altyapısı ekip tarafından geliştirilerek yeni modüllerin sistemle entegrasyonu tamamlandı.
+
+---
+
+## 🔁 Sprint Retrospective
 
 | Karar | Açıklama |
 |---|---|
-| Takım İletişimi | Daily Scrum toplantıları ve düzenli ekip iletişimi sayesinde teknik sorunlar hızlı çözüldü; bu düzenin korunmasına karar verildi |
-| Entegrasyon Hızı | Mobil, web ve backend modüllerinin daha sık birleştirilmesi ve ara entegrasyon kontrollerinin artırılması planlandı |
-| UI/UX Kalitesi | Kullanıcı arayüzünün gerçek kullanıcı testleriyle iyileştirilmesi Sprint 4'te önceliklendirildi |
-| Canlı Ortam | Production deployment için Render/Railway/Azure değerlendiriliyor |
+| 🤝 **Takım İçi Koordinasyon** | Backend, yapay zekâ ajanları ve kullanıcı arayüzü geliştirmeleri eş zamanlı yürütüldü. Düzenli ekip iletişimi sayesinde entegrasyon süreci planlandığı şekilde tamamlandı. |
+| ⚡ **Belge Üretim Süreci** | Dilekçe oluşturma ve analiz sonuçlarının kullanıcıya sunulması sırasında edinilen deneyimler doğrultusunda belge şablonlarının ve çıktı formatlarının geliştirilmeye devam edilmesine karar verildi. |
+| 🎨 **Demo Hazırlığı** | Son sprintte performans optimizasyonu, kullanıcı deneyimi iyileştirmeleri ve kapsamlı sistem testlerine öncelik verilmesine karar verildi. |
 
-### Sprint 3 Klasör Yapısı
+---
 
-```
-Sprint3/
-├── Backend/                      ← C# ASP.NET Core 8 Backend
-├── mobil_arayuz/                 ← Flutter Mobil Uygulama (iOS/Android)
-├── Web/hakkimvar-web/            ← React + TypeScript Web Uygulaması
-├── README.md
-├── sprint3_board.png
-├── Sprint_3_daily_scrum_ss_*.png
-└── Sprint_3_app_*.png
-```
+## 🗺️ Sprint Planı
+
+| Sprint | Dönem | Hedef | Durum |
+|---|---|---|---|
+| ✅ **[Sprint 1](../Sprint1/)** | 1–2. Hafta | Temel altyapı, PDF işleme, embedding | Tamamlandı |
+| ✅ **[Sprint 2](../Sprint2/)** | 3–4. Hafta | Ajan sistemi, RAG, FastAPI, Streamlit UI | Tamamlandı |
+| ✅ **Sprint 3** | 5–6. Hafta | Flutter mobil, React web, C# backend, LangGraph tam entegrasyon | Tamamlandı |
+
+<div align="center">
 
 ---
 
