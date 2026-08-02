@@ -50,9 +50,9 @@
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Program.cs",
               "RelativeDocumentMoniker": "Backend\\Program.cs",
-              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Program.cs",
-              "RelativeToolTip": "Backend\\Program.cs",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAowFsAAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\merto\\Desktop\\YapayZekaAkademisi\\YZTA_Bootcamp_310\\Backend\\Backend\\Program.cs*",
+              "RelativeToolTip": "Backend\\Program.cs*",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAowFoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-08-01T12:23:49.847Z",
               "EditorCaption": ""
@@ -67,8 +67,7 @@
               "RelativeToolTip": "Backend\\Controllers\\MessageController.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAUwD0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-01T12:23:34.074Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-01T12:23:34.074Z"
             },
             {
               "$type": "Document",
@@ -80,8 +79,7 @@
               "RelativeToolTip": "Backend\\Services\\MessageService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-01T12:23:05.911Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-01T12:23:05.911Z"
             },
             {
               "$type": "Document",
@@ -93,8 +91,7 @@
               "RelativeToolTip": "Backend\\Interfaces\\IMessageService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-01T12:22:30.158Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-01T12:22:30.158Z"
             },
             {
               "$type": "Document",
@@ -106,8 +103,7 @@
               "RelativeToolTip": "Backend\\Repositories\\MessageRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-01T12:22:01.083Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-01T12:22:01.083Z"
             }
           ]
         }
